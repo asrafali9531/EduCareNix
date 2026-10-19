@@ -1,0 +1,1330 @@
+```html
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   EDUCARE NIX — PREMIUM LESSON EXPERIENCE
+   ========================================================= */
+.lesson-page {
+    position: relative;
+    min-height: calc(100vh - 70px);
+    padding: 80px 20px 100px;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(79, 70, 229, 0.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(14, 165, 233, 0.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 55%,
+            rgba(30, 41, 99, 0.20),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(124, 58, 237, 0.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #020617 0%,
+            #071126 35%,
+            #0b1733 65%,
+            #080d24 100%
+        );
+}
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+.lesson-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+
+    background-size: 55px 55px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent
+    );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   FLOATING LIGHTS
+   ========================================================= */
+
+.lesson-page::after {
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    top: -250px;
+    right: -200px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(99,102,241,.20),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation: bigOrb 10s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes bigOrb {
+
+    0%,100% {
+        transform: translate(0,0) scale(1);
+    }
+
+    50% {
+        transform: translate(-100px,120px) scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   CONTENT LAYER
+   ========================================================= */
+
+.lesson-page > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.lesson-hero {
+    max-width: 1150px;
+    margin: auto;
+
+    min-height: 310px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 50px;
+
+    padding: 50px;
+
+    border-radius: 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.13);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.10);
+
+    overflow: hidden;
+
+    animation: heroIn .9s ease forwards;
+}
+
+@keyframes heroIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(45px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* HERO GLOW */
+
+.lesson-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    left: -120px;
+    bottom: -140px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(99,102,241,.28),
+            transparent 70%
+        );
+
+    filter: blur(10px);
+}
+
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 9px 17px;
+
+    border-radius: 50px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #c4b5fd;
+
+    background: rgba(99,102,241,.12);
+
+    border: 1px solid rgba(129,140,248,.30);
+
+    box-shadow:
+        0 0 25px rgba(99,102,241,.12);
+}
+
+.hero-text h1 {
+
+    margin: 22px 0 15px;
+
+    font-size: clamp(35px, 5vw, 62px);
+
+    line-height: 1.05;
+
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #a5b4fc,
+            #67e8f9,
+            #ffffff
+        );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: gradientText 6s linear infinite;
+}
+
+@keyframes gradientText {
+
+    0% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 100%;
+    }
+
+    100% {
+        background-position: 0%;
+    }
+}
+
+.hero-course {
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 17px;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   3D BOOK
+   ========================================================= */
+
+.hero-visual {
+
+    width: 250px;
+    height: 250px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    perspective: 900px;
+}
+
+.book-orb {
+
+    width: 170px;
+    height: 170px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 75px;
+
+    border-radius: 42px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(99,102,241,.30),
+            rgba(6,182,212,.12)
+        );
+
+    border: 1px solid rgba(165,180,252,.30);
+
+    box-shadow:
+        0 35px 70px rgba(0,0,0,.40),
+        0 0 60px rgba(99,102,241,.18),
+        inset 0 1px 0 rgba(255,255,255,.20);
+
+    transform-style: preserve-3d;
+
+    animation:
+        bookFloat 4s ease-in-out infinite,
+        bookRotate 8s ease-in-out infinite;
+}
+
+@keyframes bookFloat {
+
+    0%,100% {
+        transform: translateY(0) rotateX(0) rotateY(-8deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotateX(8deg) rotateY(8deg);
+    }
+}
+
+@keyframes bookRotate {
+
+    0%,100% {
+        box-shadow:
+            0 35px 70px rgba(0,0,0,.40),
+            0 0 50px rgba(99,102,241,.15);
+    }
+
+    50% {
+        box-shadow:
+            0 45px 90px rgba(0,0,0,.45),
+            0 0 80px rgba(6,182,212,.20);
+    }
+}
+
+
+/* =========================================================
+   READING AREA
+   ========================================================= */
+
+.lesson-reading {
+
+    max-width: 1150px;
+
+    margin: 35px auto 0;
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 250px;
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   MAIN READING CARD
+   ========================================================= */
+
+.lesson-content-card {
+
+    position: relative;
+
+    padding: 48px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.085),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.30),
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    animation: readingIn 1s ease forwards;
+}
+
+@keyframes readingIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.lesson-content-card:hover {
+
+    box-shadow:
+        0 40px 90px rgba(0,0,0,.40),
+        0 0 50px rgba(99,102,241,.07),
+        inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+
+/* =========================================================
+   CONTENT TITLE
+   ========================================================= */
+
+.content-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 35px;
+
+    padding-bottom: 25px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+}
+
+.content-icon {
+
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(99,102,241,.25),
+            rgba(6,182,212,.10)
+        );
+
+    border: 1px solid rgba(165,180,252,.25);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.12);
+
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.content-heading h2 {
+
+    margin: 0;
+
+    color: white;
+
+    font-size: 28px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   LESSON CONTENT TYPOGRAPHY
+   ========================================================= */
+
+.lesson-text {
+
+    color: rgba(255,255,255,.78);
+
+    font-size: 17px;
+
+    line-height: 1.95;
+
+    letter-spacing: .15px;
+
+    white-space: pre-line;
+}
+
+.lesson-text p {
+    margin-bottom: 20px;
+}
+
+.lesson-text strong {
+    color: #c4b5fd;
+}
+
+.lesson-text h1,
+.lesson-text h2,
+.lesson-text h3 {
+
+    color: white;
+
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
+.lesson-text ul,
+.lesson-text ol {
+
+    padding-left: 28px;
+
+    margin: 15px 0 25px;
+}
+
+.lesson-text li {
+
+    margin: 9px 0;
+}
+
+
+/* =========================================================
+   SIDE LEARNING CARD
+   ========================================================= */
+
+.lesson-side-card {
+
+    height: fit-content;
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(255,255,255,.11);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.25);
+
+    position: sticky;
+
+    top: 100px;
+
+    animation: sideIn 1.2s ease forwards;
+}
+
+@keyframes sideIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(0);
+    }
+}
+
+.side-title {
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    margin-bottom: 20px;
+}
+
+.side-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 10px;
+
+    margin-bottom: 8px;
+
+    border-radius: 12px;
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 13px;
+
+    transition: .3s;
+}
+
+.side-item:hover {
+
+    color: white;
+
+    background:
+        rgba(99,102,241,.10);
+
+    transform:
+        translateX(5px);
+}
+
+.side-icon {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(99,102,241,.12);
+}
+
+
+/* =========================================================
+   COMPLETE AREA
+   ========================================================= */
+
+.complete-section {
+
+    max-width: 1150px;
+
+    margin: 30px auto 0;
+
+    padding: 42px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,185,129,.10),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(52,211,153,.18);
+
+    backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.28);
+
+    animation: completeIn 1.3s ease forwards;
+}
+
+@keyframes completeIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(35px)
+            scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+.complete-section h2 {
+
+    margin: 0 0 10px;
+
+    color: white;
+
+    font-size: 28px;
+}
+
+.complete-section p {
+
+    color: rgba(255,255,255,.55);
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   COMPLETE BUTTON
+   ========================================================= */
+
+.complete-btn {
+
+    position: relative;
+
+    border: none;
+
+    padding: 17px 35px;
+
+    border-radius: 16px;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #059669
+        );
+
+    box-shadow:
+        0 8px 0 #047857,
+        0 22px 40px rgba(16,185,129,.25);
+
+    transition: .25s;
+}
+
+.complete-btn:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 13px 0 #047857,
+        0 30px 50px rgba(16,185,129,.35);
+}
+
+.complete-btn:active {
+
+    transform:
+        translateY(6px);
+
+    box-shadow:
+        0 2px 0 #047857;
+}
+
+
+/* =========================================================
+   COMPLETED
+   ========================================================= */
+
+.completed-message {
+
+    display: inline-flex;
+
+    padding: 15px 28px;
+
+    border-radius: 15px;
+
+    color: #6ee7b7;
+
+    font-weight: 800;
+
+    background:
+        rgba(16,185,129,.10);
+
+    border:
+        1px solid rgba(52,211,153,.30);
+
+    box-shadow:
+        0 0 35px rgba(16,185,129,.15);
+
+    animation:
+        successGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes successGlow {
+
+    0%,100% {
+        box-shadow:
+            0 0 20px rgba(16,185,129,.08);
+    }
+
+    50% {
+        box-shadow:
+            0 0 45px rgba(16,185,129,.25);
+    }
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.lesson-actions {
+
+    max-width: 1150px;
+
+    margin: 25px auto 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+.lesson-action-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 200px;
+
+    padding: 14px 22px;
+
+    border-radius: 15px;
+
+    text-decoration: none;
+
+    color: rgba(255,255,255,.82);
+
+    font-weight: 700;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    backdrop-filter: blur(15px);
+
+    transition: .3s;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.20);
+}
+
+.lesson-action-btn:hover {
+
+    color: white;
+
+    transform:
+        translateY(-6px)
+        scale(1.02);
+
+    background:
+        rgba(99,102,241,.13);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.30),
+        0 0 25px rgba(99,102,241,.12);
+}
+
+.progress-btn:hover {
+
+    background:
+        rgba(6,182,212,.13);
+}
+
+
+/* =========================================================
+   FLOATING PARTICLES
+   ========================================================= */
+
+.particle {
+
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #a5b4fc;
+
+    box-shadow:
+        0 0 15px #818cf8;
+
+    z-index: 1;
+
+    opacity: .5;
+
+    animation: particleMove 8s ease-in-out infinite;
+}
+
+.p1 {
+    top: 20%;
+    left: 7%;
+}
+
+.p2 {
+    top: 55%;
+    left: 12%;
+    animation-delay: 2s;
+}
+
+.p3 {
+    top: 25%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.p4 {
+    top: 70%;
+    right: 7%;
+    animation-delay: 3s;
+}
+
+.p5 {
+    top: 12%;
+    left: 50%;
+    animation-delay: 4s;
+}
+
+@keyframes particleMove {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            scale(.8);
+
+        opacity: .25;
+    }
+
+    50% {
+        transform:
+            translateY(-55px)
+            scale(1.5);
+
+        opacity: .9;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .lesson-hero {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 40px 25px;
+
+        gap: 20px;
+    }
+
+    .hero-visual {
+
+        width: 180px;
+        height: 180px;
+    }
+
+    .book-orb {
+
+        width: 130px;
+        height: 130px;
+
+        font-size: 58px;
+    }
+
+    .lesson-reading {
+
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-side-card {
+
+        position: relative;
+
+        top: auto;
+
+        order: 2;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .lesson-page {
+
+        padding:
+            40px
+            12px
+            70px;
+    }
+
+    .lesson-hero {
+
+        border-radius: 25px;
+
+        min-height: auto;
+    }
+
+    .hero-text h1 {
+
+        font-size: 36px;
+    }
+
+    .lesson-content-card {
+
+        padding: 28px 20px;
+
+        border-radius: 24px;
+    }
+
+    .content-heading {
+
+        align-items: flex-start;
+    }
+
+    .content-heading h2 {
+
+        font-size: 22px;
+    }
+
+    .lesson-text {
+
+        font-size: 15px;
+
+        line-height: 1.8;
+    }
+
+    .complete-section {
+
+        padding: 32px 20px;
+
+        border-radius: 24px;
+    }
+
+    .complete-btn {
+
+        width: 100%;
+    }
+
+    .lesson-actions {
+
+        flex-direction: column;
+    }
+
+    .lesson-action-btn {
+
+        width: 100%;
+    }
+}
+
+</style>
+
+
+<section class="lesson-page">
+
+    <!-- FLOATING PARTICLES -->
+
+    <span class="particle p1"></span>
+    <span class="particle p2"></span>
+    <span class="particle p3"></span>
+    <span class="particle p4"></span>
+    <span class="particle p5"></span>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <div class="lesson-hero">
+
+        <div class="hero-text">
+
+            <span class="hero-label">
+                📖 LEARNING MODULE
+            </span>
+
+            <h1>
+                {{ lesson["title"] }}
+            </h1>
+
+            <p class="hero-course">
+                📚 {{ lesson["course_title"] }}
+            </p>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="book-orb">
+                📘
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         READING AREA
+         ===================================================== -->
+
+    <div class="lesson-reading">
+
+
+        <!-- MAIN CONTENT -->
+
+        <div class="lesson-content-card">
+
+            <div class="content-heading">
+
+                <div class="content-icon">
+                    📘
+                </div>
+
+                <div>
+
+                    <h2>
+                        {{ lesson["title"] }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="lesson-text">
+
+                {{ lesson["content"] | safe }}
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDE LEARNING CARD -->
+
+        <aside class="lesson-side-card">
+
+            <div class="side-title">
+                🚀 Learning Journey
+            </div>
+
+            <div class="side-item">
+
+                <span class="side-icon">
+                    📖
+                </span>
+
+                <span>
+                    Read Lesson
+                </span>
+
+            </div>
+
+            <div class="side-item">
+
+                <span class="side-icon">
+                    🧠
+                </span>
+
+                <span>
+                    Understand Concepts
+                </span>
+
+            </div>
+
+            <div class="side-item">
+
+                <span class="side-icon">
+                    🎯
+                </span>
+
+                <span>
+                    Complete Lesson
+                </span>
+
+            </div>
+
+            <div class="side-item">
+
+                <span class="side-icon">
+                    📊
+                </span>
+
+                <span>
+                    Track Progress
+                </span>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- =====================================================
+         COMPLETE LESSON
+         ===================================================== -->
+
+    <div class="complete-section">
+
+        <h2>
+            Finished this lesson?
+        </h2>
+
+        <p>
+            Mark this lesson as completed to update
+            your learning progress.
+        </p>
+
+
+        {% if completed %}
+
+            <div class="completed-message">
+
+                ✓ Lesson Completed
+
+            </div>
+
+        {% else %}
+
+            <form
+                method="POST"
+                action="{{ url_for('complete_lesson', lesson_id=lesson['id']) }}"
+            >
+
+                <button
+                    type="submit"
+                    class="complete-btn"
+                >
+                    ✓ Mark as Complete
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTION BUTTONS
+         ===================================================== -->
+
+    <div class="lesson-actions">
+
+        <a
+            href="{{ url_for('course_details', course_id=lesson['course_id']) }}"
+            class="lesson-action-btn"
+        >
+            ← Back to Course
+        </a>
+
+        <a
+            href="{{ url_for('progress') }}"
+            class="lesson-action-btn progress-btn"
+        >
+            📊 My Progress
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
+```

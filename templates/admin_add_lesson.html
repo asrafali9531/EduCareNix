@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduCareNix | Add Lesson</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(0,217,255,.18), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(139,92,246,.20), transparent 30%),
+                linear-gradient(135deg, #07111f, #0d1729 50%, #080d18);
+            overflow-x: hidden;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(3px);
+            opacity: .30;
+            pointer-events: none;
+            z-index: 0;
+            animation: floating 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 180px;
+            height: 180px;
+            background: #00d9ff;
+            top: 10%;
+            left: -60px;
+        }
+
+        .orb2 {
+            width: 240px;
+            height: 240px;
+            background: #8b5cf6;
+            right: -80px;
+            top: 40%;
+            animation-delay: 2s;
+        }
+
+        .orb3 {
+            width: 130px;
+            height: 130px;
+            background: #00ffa3;
+            bottom: 5%;
+            left: 35%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-35px);
+            }
+        }
+
+        .navbar {
+            position: relative;
+            z-index: 5;
+
+            width: 94%;
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 15px 22px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.12);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow: 0 15px 45px rgba(0,0,0,.25);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            font-size: 23px;
+
+            background: linear-gradient(135deg, #00d9ff, #6366f1);
+            box-shadow: 0 8px 25px rgba(0,217,255,.25);
+        }
+
+        .brand h2 {
+            font-size: 20px;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 2px;
+            color: #8fa3bd;
+            font-size: 12px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #fff;
+
+            padding: 10px 15px;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.10);
+
+            transition: .3s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,.14);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+
+            width: 94%;
+            max-width: 1000px;
+
+            margin: 40px auto 70px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(30px, 5vw, 46px);
+            margin-bottom: 10px;
+
+            background: linear-gradient(90deg, #fff, #7dd3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: #91a4bc;
+        }
+
+        .form-card {
+            padding: 35px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.09),
+                    rgba(255,255,255,.035)
+                );
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.30),
+                inset 0 1px 0 rgba(255,255,255,.08);
+        }
+
+        .form-intro {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            margin-bottom: 30px;
+            padding: 20px;
+
+            border-radius: 20px;
+
+            background: rgba(0,217,255,.06);
+            border: 1px solid rgba(0,217,255,.12);
+        }
+
+        .intro-icon {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,217,255,.20),
+                    rgba(99,102,241,.20)
+                );
+
+            border: 1px solid rgba(255,255,255,.10);
+        }
+
+        .form-intro h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .form-intro p {
+            color: #8193aa;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+
+            color: #dbeafe;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .required {
+            color: #fb7185;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            color: #fff;
+            background: rgba(0,0,0,.20);
+
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 14px;
+
+            outline: none;
+
+            padding: 14px 16px;
+
+            font-size: 15px;
+
+            transition: .3s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(0,217,255,.55);
+
+            box-shadow:
+                0 0 0 3px rgba(0,217,255,.08),
+                0 8px 25px rgba(0,217,255,.06);
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        select option {
+            background: #101827;
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+
+            border: none;
+            text-decoration: none;
+            text-align: center;
+
+            padding: 14px 20px;
+
+            border-radius: 14px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .create-btn {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #06b6d4,
+                    #6366f1
+                );
+
+            box-shadow:
+                0 12px 30px rgba(6,182,212,.22);
+        }
+
+        .create-btn:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 18px 40px rgba(6,182,212,.35);
+        }
+
+        .cancel-btn {
+            color: #dbeafe;
+
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+        }
+
+        .cancel-btn:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,.12);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-card {
+                padding: 23px 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛡️
+            </div>
+
+            <div>
+                <h2>EduCareNix</h2>
+                <span>Admin Control Center</span>
+            </div>
+
+        </div>
+
+
+        <div class="nav-buttons">
+
+            <a
+                href="{{ url_for('admin_lessons') }}"
+                class="nav-btn">
+                📖 Lessons
+            </a>
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="nav-btn">
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="page-header">
+
+            <h1>➕ Add New Lesson</h1>
+
+            <p>
+                Create a new lesson and add learning content to EduCareNix.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="form-intro">
+
+                <div class="intro-icon">
+                    📖
+                </div>
+
+                <div>
+
+                    <h3>
+                        Lesson Information
+                    </h3>
+
+                    <p>
+                        Select a course and enter the lesson details below.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_add_lesson') }}">
+
+
+                <!-- Course -->
+
+                <div class="form-group">
+
+                    <label for="course_id">
+                        Select Course
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="course_id"
+                        name="course_id"
+                        required>
+
+                        <option value="">
+                            Select a course
+                        </option>
+
+                        {% for course in courses %}
+
+                        <option value="{{ course['id'] }}">
+                            {{ course['title'] }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Lesson Title -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Lesson Title
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Example: Introduction to Python"
+                        required>
+
+                </div>
+
+
+                <!-- Content -->
+
+                <div class="form-group">
+
+                    <label for="content">
+                        Lesson Content
+                    </label>
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        placeholder="Write the lesson content here..."></textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn create-btn">
+                        🚀 Create Lesson
+                    </button>
+
+                    <a
+                        href="{{ url_for('admin_lessons') }}"
+                        class="btn cancel-btn">
+                        ↩️ Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <footer>
+            © 2026 EduCareNix • Lesson Management System
+        </footer>
+
+    </main>
+
+</body>
+</html>

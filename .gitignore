@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+educarenix.db
+static/uploads/profiles/
+.env
+*.db

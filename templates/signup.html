@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | EduCareNix</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(99, 102, 241, 0.25),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(6, 182, 212, 0.20),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #070b18,
+                    #10152d 50%,
+                    #080b18
+                );
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow-x: hidden;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(10, 15, 35, 0.65);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            position: relative;
+            z-index: 10;
+        }
+
+
+        /* ================= LOGO ================= */
+
+        .logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+        }
+
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 10px;
+
+            filter:
+                drop-shadow(
+                    0 5px 12px
+                    rgba(99, 102, 241, 0.35)
+                );
+
+            transition: 0.3s ease;
+        }
+
+
+        .logo:hover img {
+            transform:
+                scale(1.06)
+                rotate(-2deg);
+        }
+
+
+        .logo-name {
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #8b9cff,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.3s ease;
+        }
+
+
+        .nav-links a:hover {
+            color: #ffffff;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= BACKGROUND ORBS ================= */
+
+        .orb {
+            position: fixed;
+
+            border-radius: 50%;
+
+            filter: blur(5px);
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        .orb-one {
+            width: 270px;
+            height: 270px;
+
+            background: rgba(99, 102, 241, 0.15);
+
+            top: 12%;
+            left: -110px;
+
+            animation:
+                floatOne 8s ease-in-out infinite;
+        }
+
+
+        .orb-two {
+            width: 230px;
+            height: 230px;
+
+            background: rgba(34, 211, 238, 0.12);
+
+            bottom: 5%;
+            right: -80px;
+
+            animation:
+                floatTwo 9s ease-in-out infinite;
+        }
+
+
+        @keyframes floatOne {
+
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    translateX(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-35px)
+                    translateX(25px);
+            }
+        }
+
+
+        @keyframes floatTwo {
+
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    translateX(0);
+            }
+
+            50% {
+                transform:
+                    translateY(30px)
+                    translateX(-20px);
+            }
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+            flex: 1;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 45px 20px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* ================= SIGNUP CARD ================= */
+
+        .signup-card {
+            width: 100%;
+
+            max-width: 480px;
+
+            padding: 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.10),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            border-radius: 28px;
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            position: relative;
+
+            animation:
+                cardAppear 0.8s ease forwards;
+        }
+
+
+        .signup-card::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -1px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 102, 241, 0.50),
+                    transparent 35%,
+                    transparent 65%,
+                    rgba(34, 211, 238, 0.35)
+                );
+
+            z-index: -1;
+
+            opacity: 0.5;
+
+            filter: blur(8px);
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        /* ================= SIGNUP ICON ================= */
+
+        .signup-icon {
+            width: 78px;
+            height: 78px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            font-size: 36px;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(99, 102, 241, 0.30),
+                    rgba(34, 211, 238, 0.14)
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.14);
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+            animation:
+                iconFloat 3s ease-in-out infinite;
+        }
+
+
+        @keyframes iconFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+
+        /* ================= HEADINGS ================= */
+
+        .signup-label {
+            text-align: center;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            color: #67e8f9;
+
+            margin-bottom: 9px;
+        }
+
+
+        .signup-card h1 {
+            text-align: center;
+
+            font-size: 34px;
+
+            font-weight: 800;
+
+            margin-bottom: 9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #c7d2fe,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .subtitle {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #dbeafe;
+        }
+
+
+        .input-wrapper {
+            position: relative;
+        }
+
+
+        .input-icon {
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 17px;
+
+            opacity: 0.8;
+
+            pointer-events: none;
+        }
+
+
+        .form-control {
+            width: 100%;
+
+            padding: 14px 16px 14px 46px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.10);
+
+            outline: none;
+
+            background:
+                rgba(5, 10, 25, 0.55);
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+
+        .form-control:focus {
+            border-color:
+                rgba(103, 232, 249, 0.65);
+
+            background:
+                rgba(8, 14, 32, 0.75);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(34, 211, 238, 0.08),
+
+                0 10px 30px
+                rgba(0, 0, 0, 0.18);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= SIGNUP BUTTON ================= */
+
+        .signup-btn {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            padding: 16px;
+
+            margin-top: 7px;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.3px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #4f46e5,
+                    #0891b2
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(79, 70, 229, 0.30);
+
+            transition:
+                all 0.3s ease;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .signup-btn::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.25),
+                    transparent
+                );
+
+            transition: 0.5s;
+        }
+
+
+        .signup-btn:hover::before {
+            left: 100%;
+        }
+
+
+        .signup-btn:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(79, 70, 229, 0.40);
+        }
+
+
+        .signup-btn:active {
+            transform:
+                translateY(-1px)
+                scale(0.99);
+        }
+
+
+        /* ================= LOGIN LINK ================= */
+
+        .login-text {
+            text-align: center;
+
+            margin-top: 23px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        .login-text a {
+            color: #a5b4fc;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            transition: 0.3s ease;
+        }
+
+
+        .login-text a:hover {
+            color: #67e8f9;
+        }
+
+
+        /* ================= BENEFITS ================= */
+
+        .benefits {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+            margin-top: 24px;
+        }
+
+
+        .benefit {
+            padding: 10px 5px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.06);
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            line-height: 1.4;
+        }
+
+
+        .benefit-icon {
+            display: block;
+
+            font-size: 17px;
+
+            margin-bottom: 4px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            padding: 18px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .footer span {
+            color: #818cf8;
+
+            font-weight: 700;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .navbar {
+                padding: 17px 5%;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .logo img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .main {
+                padding:
+                    35px 16px;
+            }
+
+            .signup-card {
+                padding:
+                    34px 24px;
+
+                border-radius:
+                    22px;
+            }
+
+            .signup-card::before {
+                border-radius:
+                    22px;
+            }
+
+            .signup-card h1 {
+                font-size:
+                    28px;
+            }
+
+            .signup-icon {
+                width: 70px;
+                height: 70px;
+
+                font-size: 32px;
+            }
+        }
+
+
+        @media (max-width: 400px) {
+
+            .signup-card {
+                padding:
+                    30px 19px;
+            }
+
+            .signup-card h1 {
+                font-size:
+                    25px;
+            }
+
+            .benefits {
+                gap: 5px;
+            }
+
+            .benefit {
+                font-size: 9px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ================= BACKGROUND ================= -->
+
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('homepage') }}"
+            class="logo"
+        >
+
+            <img
+                src="{{ url_for('static', filename='logo.png') }}"
+                alt="EduCareNix Logo"
+            >
+
+            <span class="logo-name">
+                EduCareNix
+            </span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('homepage') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('login') }}">
+                🔐 Login
+            </a>
+
+            <a href="{{ url_for('signup') }}">
+                ✨ Sign Up
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <div class="signup-card">
+
+
+            <!-- ICON -->
+
+            <div class="signup-icon">
+                ✨
+            </div>
+
+
+            <!-- HEADING -->
+
+            <div class="signup-label">
+                JOIN EDUCARENIX
+            </div>
+
+
+            <h1>
+                Create Account
+            </h1>
+
+
+            <p class="subtitle">
+                Start your learning journey with
+                <strong>EduCareNix</strong> today.
+            </p>
+
+
+
+            <!-- ================= FORM ================= -->
+
+            <form
+                method="POST"
+                action="{{ url_for('signup') }}"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        👤 Full Name
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-control"
+                            placeholder="Enter your full name"
+                            required
+                            autocomplete="name"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        📧 Email Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter your email address"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        🔐 Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Create a secure password"
+                            required
+                            autocomplete="new-password"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SIGN UP BUTTON -->
+
+                <button
+                    type="submit"
+                    class="signup-btn"
+                >
+                    ✨ Create My Account
+                    <span> →</span>
+                </button>
+
+            </form>
+
+
+
+            <!-- ================= BENEFITS ================= -->
+
+            <div class="benefits">
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        📚
+                    </span>
+
+                    Learn Courses
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        🏆
+                    </span>
+
+                    Earn Badges
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        📈
+                    </span>
+
+                    Track Progress
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= LOGIN ================= -->
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Login →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        © 2026
+        <span>EduCareNix</span>
+        • Smart Learning & Skill Platform
+
+    </footer>
+
+
+</body>
+</html>

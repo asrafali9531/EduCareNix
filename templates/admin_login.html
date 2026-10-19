@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | EduCareNix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.25), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.20), transparent 30%),
+                linear-gradient(135deg, #070b18, #10152d 50%, #080b18);
+
+            color: white;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(10, 15, 35, 0.65);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #8b9cff,
+                #67e8f9
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* ================= BACKGROUND ORBS ================= */
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(5px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-one {
+            width: 260px;
+            height: 260px;
+            background: rgba(99, 102, 241, 0.15);
+            top: 15%;
+            left: -100px;
+            animation: floatOne 8s ease-in-out infinite;
+        }
+
+        .orb-two {
+            width: 220px;
+            height: 220px;
+            background: rgba(34, 211, 238, 0.12);
+            bottom: 5%;
+            right: -70px;
+            animation: floatTwo 9s ease-in-out infinite;
+        }
+
+        @keyframes floatOne {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-35px) translateX(25px);
+            }
+        }
+
+        @keyframes floatTwo {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(30px) translateX(-20px);
+            }
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 60px 20px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-card {
+            width: 100%;
+            max-width: 470px;
+
+            padding: 45px 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.10),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.13);
+
+            border-radius: 28px;
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            position: relative;
+
+            animation: cardAppear 0.8s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(35px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-card::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 102, 241, 0.5),
+                    transparent 35%,
+                    transparent 65%,
+                    rgba(34, 211, 238, 0.35)
+                );
+
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(8px);
+        }
+
+        /* ================= ADMIN ICON ================= */
+
+        .admin-icon {
+            width: 82px;
+            height: 82px;
+
+            margin: 0 auto 22px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 38px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(99, 102, 241, 0.30),
+                    rgba(34, 211, 238, 0.14)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.14);
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* ================= HEADINGS ================= */
+
+        .admin-label {
+            text-align: center;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            color: #67e8f9;
+
+            margin-bottom: 10px;
+        }
+
+        .login-card h1 {
+            text-align: center;
+
+            font-size: 34px;
+            font-weight: 800;
+
+            margin-bottom: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #c7d2fe,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 32px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #dbeafe;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 17px;
+
+            opacity: 0.8;
+
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+
+            padding: 15px 16px 15px 46px;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(255, 255, 255, 0.10);
+
+            outline: none;
+
+            background: rgba(5, 10, 25, 0.55);
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                inset 0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+        }
+
+        .form-control:focus {
+            border-color: rgba(103, 232, 249, 0.65);
+
+            background: rgba(8, 14, 32, 0.75);
+
+            box-shadow:
+                0 0 0 4px rgba(34, 211, 238, 0.08),
+                0 10px 30px rgba(0, 0, 0, 0.18);
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            padding: 16px;
+
+            margin-top: 8px;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            letter-spacing: 0.3px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #4f46e5,
+                    #0891b2
+                );
+
+            box-shadow:
+                0 12px 30px rgba(79, 70, 229, 0.30);
+
+            transition: all 0.3s ease;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -100%;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.25),
+                    transparent
+                );
+
+            transition: 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 18px 40px rgba(79, 70, 229, 0.40);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px) scale(0.99);
+        }
+
+        /* ================= SECURITY ================= */
+
+        .security-note {
+            margin-top: 23px;
+
+            padding: 13px 15px;
+
+            border-radius: 13px;
+
+            background: rgba(34, 211, 238, 0.055);
+
+            border: 1px solid rgba(34, 211, 238, 0.10);
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
+        .security-note strong {
+            color: #67e8f9;
+        }
+
+        /* ================= BACK LINK ================= */
+
+        .back-link {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 24px;
+        }
+
+        .back-link a {
+            color: #a5b4fc;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #67e8f9;
+
+            transform: translateX(-3px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            padding: 18px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer span {
+            color: #818cf8;
+            font-weight: 700;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .navbar {
+                padding: 17px 5%;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .login-card {
+                padding: 35px 25px;
+                border-radius: 22px;
+            }
+
+            .login-card::before {
+                border-radius: 22px;
+            }
+
+            .login-card h1 {
+                font-size: 28px;
+            }
+
+            .admin-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 32px;
+            }
+
+            .main {
+                padding: 40px 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .login-card h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Effects -->
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            EduCareNix
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('homepage') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('login') }}">
+                👨‍🎓 Student Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <div class="login-card">
+
+            <!-- Admin Icon -->
+
+            <div class="admin-icon">
+                🛡️
+            </div>
+
+            <!-- Heading -->
+
+            <div class="admin-label">
+                ADMIN PORTAL
+            </div>
+
+            <h1>
+                Welcome Back
+            </h1>
+
+            <p class="subtitle">
+                Login to securely manage your
+                <strong>EduCareNix</strong> platform.
+            </p>
+
+
+            <!-- ================= LOGIN FORM ================= -->
+
+            <form method="POST"
+                  action="{{ url_for('admin_login') }}">
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        📧 Admin Email
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter admin email"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        🔐 Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Enter admin password"
+                            required
+                            autocomplete="current-password"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Login Button -->
+
+                <button type="submit" class="login-btn">
+                    🔐 Login to Admin Panel
+                    <span> →</span>
+                </button>
+
+            </form>
+
+
+            <!-- Security -->
+
+            <div class="security-note">
+                🛡️ <strong>Secure Admin Access</strong><br>
+                This portal is restricted to authorized
+                EduCareNix administrators.
+            </div>
+
+
+            <!-- Back -->
+
+            <div class="back-link">
+
+                <a href="{{ url_for('homepage') }}">
+                    ← Back to EduCareNix
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+        © 2026 <span>EduCareNix</span> • Smart Learning & Skill Platform
+    </footer>
+
+</body>
+</html>

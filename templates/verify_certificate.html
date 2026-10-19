@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Certificate | EduCareNix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(99,102,241,.25), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(139,92,246,.20), transparent 35%),
+                #070b18;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .card {
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.45);
+            text-align: center;
+        }
+
+        .logo {
+            width: 190px;
+            max-width: 80%;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 25px;
+        }
+
+        .icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            font-size: 34px;
+            box-shadow: 0 0 30px rgba(99,102,241,.4);
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #aeb8d0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-weight: bold;
+            color: #dbe4ff;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.15);
+            background: rgba(0,0,0,.25);
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+        }
+
+        input::placeholder {
+            color: #7f8aa5;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 10px 25px rgba(99,102,241,.25);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(99,102,241,.4);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 15px;
+            text-align: left;
+        }
+
+        .success {
+            background: rgba(34,197,94,.10);
+            border: 1px solid rgba(34,197,94,.35);
+        }
+
+        .error {
+            background: rgba(239,68,68,.10);
+            border: 1px solid rgba(239,68,68,.35);
+        }
+
+        .result h2 {
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            margin: 8px 0;
+            color: #d5ddf5;
+        }
+
+        .verified {
+            color: #4ade80;
+        }
+
+        .invalid {
+            color: #f87171;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #a5b4fc;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .logo {
+                width: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <img
+            src="{{ url_for('static', filename='logo.png') }}"
+            alt="EduCareNix Logo"
+            class="logo"
+        >
+
+        <div class="icon">
+            ✓
+        </div>
+
+        <h1>Certificate Verification</h1>
+
+        <p class="subtitle">
+            Verify the authenticity of an EduCareNix certificate
+            using the certificate ID.
+        </p>
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="certificate_id">
+                    Certificate ID
+                </label>
+
+                <input
+                    type="text"
+                    id="certificate_id"
+                    name="certificate_id"
+                    placeholder="Enter Certificate ID"
+                    value="{{ request.form.get('certificate_id', '') }}"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                🔍 Verify Certificate
+            </button>
+
+        </form>
+
+
+        {% if certificate %}
+
+        <div class="result success">
+
+            <h2 class="verified">
+                ✓ Certificate Verified
+            </h2>
+
+            <p>
+                <strong>Student:</strong>
+                {{ certificate.student_name }}
+            </p>
+
+            <p>
+                <strong>Course:</strong>
+                {{ certificate.course_title }}
+            </p>
+
+            <p>
+                <strong>Certificate ID:</strong>
+                {{ certificate.certificate_id }}
+            </p>
+
+            <p>
+                <strong>Completion Date:</strong>
+                {{ certificate.completion_date }}
+            </p>
+
+        </div>
+
+        {% elif searched %}
+
+        <div class="result error">
+
+            <h2 class="invalid">
+                ✕ Certificate Not Found
+            </h2>
+
+            <p>
+                No certificate was found with the entered
+                Certificate ID.
+            </p>
+
+            <p>
+                Please check the Certificate ID and try again.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <a href="{{ url_for('homepage') }}" class="back-link">
+            ← Back to EduCareNix
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

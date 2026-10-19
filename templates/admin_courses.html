@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduCareNix | Manage Courses</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 212, 255, .20), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, .20), transparent 30%),
+                linear-gradient(135deg, #07111f, #0d1729 50%, #080d18);
+            overflow-x: hidden;
+        }
+
+        /* Floating Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: .35;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 180px;
+            height: 180px;
+            background: #00d9ff;
+            top: 8%;
+            left: -50px;
+        }
+
+        .orb2 {
+            width: 240px;
+            height: 240px;
+            background: #8b5cf6;
+            right: -70px;
+            top: 35%;
+            animation-delay: 2s;
+        }
+
+        .orb3 {
+            width: 140px;
+            height: 140px;
+            background: #00ffa3;
+            bottom: 5%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-35px) translateX(20px);
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: relative;
+            z-index: 10;
+            width: 94%;
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 15px 22px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(0,0,0,.25);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            background: linear-gradient(135deg, #00d9ff, #6366f1);
+            box-shadow: 0 8px 25px rgba(0,217,255,.25);
+        }
+
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: .5px;
+        }
+
+        .brand span {
+            display: block;
+            color: #8fa3bd;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.10);
+
+            transition: .3s;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,.14);
+        }
+
+        .logout {
+            background: rgba(239,68,68,.15);
+            border-color: rgba(239,68,68,.25);
+        }
+
+        .logout:hover {
+            background: rgba(239,68,68,.25);
+        }
+
+        /* Main */
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 94%;
+            max-width: 1400px;
+            margin: 35px auto 70px;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+
+            padding: 35px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,217,255,.10),
+                    rgba(139,92,246,.08)
+                );
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.25),
+                inset 0 1px 0 rgba(255,255,255,.08);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(28px, 4vw, 48px);
+            margin-bottom: 10px;
+
+            background: linear-gradient(90deg, #fff, #7dd3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            color: #9fb0c7;
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 50px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0,217,255,.20),
+                    rgba(139,92,246,.20)
+                );
+
+            border: 1px solid rgba(255,255,255,.15);
+
+            box-shadow:
+                15px 15px 35px rgba(0,0,0,.3),
+                inset 5px 5px 15px rgba(255,255,255,.04);
+
+            transform: perspective(500px) rotateY(-8deg);
+        }
+
+        /* Action bar */
+        .action-bar {
+            margin-top: 25px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+
+            padding: 18px 22px;
+
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.10);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(18px);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .section-title span {
+            color: #7dd3fc;
+        }
+
+        .add-btn {
+            text-decoration: none;
+            color: #fff;
+
+            padding: 12px 20px;
+            border-radius: 14px;
+
+            font-weight: 700;
+
+            background: linear-gradient(135deg, #06b6d4, #6366f1);
+
+            box-shadow:
+                0 10px 25px rgba(6,182,212,.25);
+
+            transition: .3s;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow:
+                0 16px 35px rgba(6,182,212,.35);
+        }
+
+        /* Course Grid */
+        .courses-grid {
+            margin-top: 25px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .course-card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 25px;
+
+            min-height: 300px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.09),
+                    rgba(255,255,255,.035)
+                );
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.22),
+                inset 0 1px 0 rgba(255,255,255,.08);
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease,
+                border-color .35s ease;
+        }
+
+        .course-card:hover {
+            transform:
+                translateY(-10px)
+                perspective(800px)
+                rotateX(2deg)
+                rotateY(-2deg);
+
+            border-color: rgba(125,211,252,.35);
+
+            box-shadow:
+                0 30px 70px rgba(0,0,0,.35),
+                0 0 30px rgba(0,217,255,.08);
+        }
+
+        .course-glow {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+
+            background: #00d9ff;
+            filter: blur(55px);
+            opacity: .10;
+
+            right: -40px;
+            top: -40px;
+        }
+
+        .course-number {
+            position: absolute;
+            right: 20px;
+            top: 18px;
+
+            font-size: 12px;
+            color: #6f829c;
+        }
+
+        .course-icon {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,217,255,.20),
+                    rgba(99,102,241,.20)
+                );
+
+            border: 1px solid rgba(255,255,255,.10);
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                8px 8px 20px rgba(0,0,0,.25);
+        }
+
+        .course-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .course-card p {
+            color: #94a6bd;
+            line-height: 1.6;
+            min-height: 55px;
+            margin-bottom: 18px;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 6px 10px;
+            border-radius: 9px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            color: #9deaff;
+
+            background: rgba(0,217,255,.08);
+            border: 1px solid rgba(0,217,255,.15);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+
+            text-align: center;
+            text-decoration: none;
+
+            padding: 11px 12px;
+            border-radius: 12px;
+
+            font-weight: 700;
+            font-size: 13px;
+
+            transition: .3s;
+        }
+
+        .edit {
+            color: #fff;
+            background: rgba(59,130,246,.15);
+            border: 1px solid rgba(59,130,246,.25);
+        }
+
+        .delete {
+            color: #fff;
+            background: rgba(239,68,68,.12);
+            border: 1px solid rgba(239,68,68,.22);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .edit:hover {
+            background: rgba(59,130,246,.28);
+        }
+
+        .delete:hover {
+            background: rgba(239,68,68,.25);
+        }
+
+        /* Empty */
+        .empty {
+            grid-column: 1 / -1;
+
+            padding: 60px 20px;
+            text-align: center;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,.05);
+            border: 1px dashed rgba(255,255,255,.15);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #8798ae;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 38px;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 92%;
+            }
+
+            .hero {
+                padding: 25px 18px;
+            }
+
+            .course-card {
+                padding: 20px;
+            }
+
+            .nav-btn {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Orbs -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="brand">
+            <div class="brand-icon">🛡️</div>
+
+            <div>
+                <h2>EduCareNix</h2>
+                <span>Admin Control Center</span>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="{{ url_for('admin_dashboard') }}" class="nav-btn">
+                🏠 Dashboard
+            </a>
+
+            <a href="{{ url_for('admin_logout') }}" class="nav-btn logout">
+                🚪 Logout
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <!-- Hero -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1>Course Management</h1>
+
+                <p>
+                    Create, organize and manage EduCareNix learning courses
+                    from one powerful administration panel.
+                </p>
+
+            </div>
+
+            <div class="hero-icon">
+                📚
+            </div>
+
+        </section>
+
+
+        <!-- Action Bar -->
+        <section class="action-bar">
+
+            <div class="section-title">
+                📖 <span>Available Courses</span>
+            </div>
+
+            <a href="{{ url_for('admin_add_course') }}" class="add-btn">
+                ➕ Add New Course
+            </a>
+
+        </section>
+
+
+        <!-- Courses -->
+        <section class="courses-grid">
+
+            {% if courses %}
+
+                {% for course in courses %}
+
+                <article class="course-card">
+
+                    <div class="course-glow"></div>
+
+                    <div class="course-number">
+                        #{{ loop.index }}
+                    </div>
+
+                    <div class="course-icon">
+                        {% if loop.index % 4 == 1 %}
+                            🐍
+                        {% elif loop.index % 4 == 2 %}
+                            💻
+                        {% elif loop.index % 4 == 3 %}
+                            🌐
+                        {% else %}
+                            🧠
+                        {% endif %}
+                    </div>
+
+                    <h3>
+                        {{ course['title'] }}
+                    </h3>
+
+                    <p>
+                        {{ course['description'] or 'Explore this learning course and build your skills.' }}
+                    </p>
+
+                    <div class="course-meta">
+                        <span class="tag">
+                            📚 Course
+                        </span>
+
+                        <span class="tag">
+                             Learning
+                        </span>
+                    </div>
+
+                    <div class="actions">
+
+                        <a
+                            href="{{ url_for('admin_edit_course', course_id=course['id']) }}"
+                            class="action-btn edit">
+                            ✏️ Edit
+                        </a>
+
+                        <a
+                            href="{{ url_for('admin_delete_course', course_id=course['id']) }}"
+                            class="action-btn delete"
+                            onclick="return confirm('Are you sure you want to delete this course?');">
+                            🗑️ Delete
+                        </a>
+
+                    </div>
+
+                </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📚
+                    </div>
+
+                    <h3>No Courses Available</h3>
+
+                    <p>
+                        Start building your learning platform by adding your first course.
+                    </p>
+
+                    <br>
+
+                    <a href="{{ url_for('admin_add_course') }}" class="add-btn">
+                        ➕ Create First Course
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <footer>
+            © 2026 EduCareNix • Admin Control Center
+        </footer>
+
+    </main>
+
+</body>
+</html>

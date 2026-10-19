@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile | EduCareNix</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #fff;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124,58,237,.25),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(37,99,235,.22),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(16,185,129,.10),
+                    transparent 32%
+                ),
+                #050816;
+
+            overflow-x: hidden;
+        }
+
+        /* ================= BACKGROUND ================= */
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(15px);
+            pointer-events: none;
+            z-index: -3;
+
+            animation:
+                floatOrb 9s ease-in-out infinite;
+        }
+
+        .orb.one {
+            width: 260px;
+            height: 260px;
+            left: -120px;
+            top: 150px;
+            background: rgba(124,58,237,.18);
+        }
+
+        .orb.two {
+            width: 300px;
+            height: 300px;
+            right: -130px;
+            top: 400px;
+            background: rgba(37,99,235,.18);
+            animation-delay: 2s;
+        }
+
+        .orb.three {
+            width: 180px;
+            height: 180px;
+            left: 45%;
+            bottom: 20px;
+            background: rgba(16,185,129,.10);
+            animation-delay: 4s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translateY(-35px)
+                    scale(1.08);
+            }
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            min-height: 76px;
+            padding: 12px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background:
+                rgba(5,8,22,.78);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            box-shadow:
+                0 10px 40px rgba(0,0,0,.25);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: #fff;
+            text-decoration: none;
+
+            font-size: 22px;
+            font-weight: 850;
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 43px;
+            height: 43px;
+
+            display: block;
+            object-fit: contain;
+            object-position: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            padding: 2px;
+
+            box-shadow:
+                0 12px 28px rgba(37,99,235,.28),
+                inset 0 1px 1px rgba(255,255,255,.18);
+
+            transition: .3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform:
+                translateY(-2px)
+                rotate(-2deg)
+                scale(1.04);
+
+            box-shadow:
+                0 16px 35px rgba(124,58,237,.35);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,.70);
+            text-decoration: none;
+
+            padding: 10px 13px;
+            border-radius: 11px;
+
+            font-size: 13px;
+            font-weight: 650;
+
+            transition: .3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+
+            background:
+                rgba(255,255,255,.08);
+
+            transform:
+                translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,58,237,.25),
+                    rgba(37,99,235,.18)
+                );
+
+            border:
+                1px solid rgba(124,58,237,.25);
+
+            box-shadow:
+                0 8px 20px rgba(124,58,237,.10);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+
+            padding:
+                65px 25px 40px;
+
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 17px;
+
+            border-radius: 50px;
+
+            color: #c4b5fd;
+
+            background:
+                rgba(124,58,237,.11);
+
+            border:
+                1px solid rgba(124,58,237,.25);
+
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+
+            animation:
+                badgeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .hero h1 {
+            margin-top: 22px;
+            margin-bottom: 15px;
+
+            font-size:
+                clamp(43px,6vw,68px);
+
+            font-weight: 900;
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #fff,
+                    #c4b5fd,
+                    #93c5fd,
+                    #fff
+                );
+
+            background-size: 250% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            animation:
+                gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            to {
+                background-position:
+                    250% center;
+            }
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+
+            color:
+                rgba(255,255,255,.60);
+
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* ================= MAIN ================= */
+
+        .profile-container {
+            max-width: 1050px;
+            margin: auto;
+
+            padding:
+                10px 25px 75px;
+        }
+
+        /* ================= PROFILE CARD ================= */
+
+        .profile-card {
+            position: relative;
+
+            padding: 40px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.105),
+                    rgba(255,255,255,.035)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.11);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 30px 90px rgba(0,0,0,.35),
+                inset 0 1px 1px rgba(255,255,255,.14);
+
+            transform-style: preserve-3d;
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+
+            overflow: hidden;
+
+            animation:
+                profileAppear .8s ease;
+        }
+
+        @keyframes profileAppear {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    rotateX(7deg);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    rotateX(0);
+            }
+        }
+
+        .profile-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            top: -170px;
+            right: -120px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124,58,237,.15);
+
+            filter: blur(15px);
+
+            pointer-events: none;
+        }
+
+        .profile-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            left: -130px;
+            bottom: -130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(37,99,235,.12);
+
+            filter: blur(20px);
+
+            pointer-events: none;
+        }
+
+        /* ================= PROFILE TOP ================= */
+
+        .profile-top {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+
+            gap: 30px;
+
+            padding-bottom: 35px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+        }
+
+        /* ================= AVATAR ================= */
+
+        .avatar-wrapper {
+            position: relative;
+
+            flex-shrink: 0;
+
+            width: 145px;
+            height: 145px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transform-style: preserve-3d;
+
+            animation:
+                avatarFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% {
+                transform:
+                    translateY(0)
+                    rotateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-8px)
+                    rotateY(6deg);
+            }
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: 0;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #7c3aed,
+                    #2563eb,
+                    #38bdf8,
+                    #7c3aed
+                );
+
+            animation:
+                spin 6s linear infinite;
+
+            box-shadow:
+                0 0 35px rgba(124,58,237,.28);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar {
+            position: relative;
+            z-index: 2;
+
+            width: 125px;
+            height: 125px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171331,
+                    #0a1027
+                );
+
+            border:
+                2px solid rgba(255,255,255,.12);
+
+            font-size: 57px;
+
+            box-shadow:
+                inset 0 0 30px rgba(0,0,0,.45),
+                0 20px 45px rgba(0,0,0,.35);
+
+            transform:
+                translateZ(35px);
+
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .online {
+            position: absolute;
+            z-index: 5;
+
+            right: 7px;
+            bottom: 12px;
+
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            border:
+                4px solid #080c20;
+
+            box-shadow:
+                0 0 15px rgba(34,197,94,.55);
+        }
+
+        /* ================= PROFILE PHOTO SECTION ================= */
+
+        .photo-section {
+            position: relative;
+            z-index: 5;
+
+            margin-top: 28px;
+
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124,58,237,.09),
+                    rgba(37,99,235,.055)
+                );
+
+            border:
+                1px solid rgba(124,58,237,.18);
+
+            box-shadow:
+                0 18px 45px rgba(0,0,0,.18),
+                inset 0 1px 1px rgba(255,255,255,.07);
+        }
+
+        .photo-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .photo-heading h3 {
+            font-size: 18px;
+            font-weight: 850;
+        }
+
+        .photo-heading span {
+            color:
+                rgba(255,255,255,.45);
+
+            font-size: 11px;
+        }
+
+        .photo-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .photo-preview {
+            width: 105px;
+            height: 105px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            padding: 3px;
+
+            background:
+                conic-gradient(
+                    #7c3aed,
+                    #2563eb,
+                    #38bdf8,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 15px 35px rgba(37,99,235,.22);
+        }
+
+        .photo-preview-inner {
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50%;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171331,
+                    #0a1027
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+        }
+
+        #photoPreview {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: none;
+        }
+
+        .photo-controls {
+            flex: 1;
+        }
+
+        .photo-controls p {
+            color:
+                rgba(255,255,255,.55);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin-bottom: 15px;
+        }
+
+        .upload-label {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding:
+                12px 18px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #2563eb
+                );
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            font-size: 13px;
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 25px rgba(124,58,237,.25);
+
+            transition: .3s ease;
+        }
+
+        .upload-label:hover {
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 16px 32px rgba(124,58,237,.35);
+        }
+
+        #profilePhotoInput {
+            display: none;
+        }
+
+        .upload-hint {
+            margin-top: 9px;
+
+            color:
+                rgba(255,255,255,.35);
+
+            font-size: 10px;
+        }
+
+        /* ================= PROFILE INFO ================= */
+
+        .profile-info {
+            transform:
+                translateZ(25px);
+        }
+
+        .student-label {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 10px;
+
+            padding:
+                7px 12px;
+
+            border-radius: 30px;
+
+            color: #c4b5fd;
+
+            background:
+                rgba(124,58,237,.10);
+
+            border:
+                1px solid rgba(124,58,237,.20);
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: .7px;
+        }
+
+        .profile-info h2 {
+            font-size: 34px;
+            font-weight: 900;
+            margin-bottom: 9px;
+        }
+
+        .email {
+            color:
+                rgba(255,255,255,.52);
+
+            font-size: 14px;
+
+            word-break: break-word;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            position: relative;
+            z-index: 3;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 18px;
+
+            margin-top: 30px;
+        }
+
+        .stat {
+            position: relative;
+
+            min-height: 145px;
+
+            padding: 23px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.22),
+                inset 0 1px 1px rgba(255,255,255,.07);
+
+            transform-style: preserve-3d;
+
+            transition: .35s ease;
+
+            overflow: hidden;
+        }
+
+        .stat:hover {
+            transform:
+                translateY(-8px)
+                rotateX(3deg)
+                rotateY(-3deg);
+
+            border-color:
+                rgba(124,58,237,.35);
+
+            box-shadow:
+                0 25px 55px rgba(0,0,0,.35),
+                0 0 25px rgba(124,58,237,.08);
+        }
+
+        .stat::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            right: -60px;
+            top: -60px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124,58,237,.13);
+
+            filter: blur(10px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124,58,237,.25),
+                    rgba(37,99,235,.13)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.10);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,.25);
+
+            transform:
+                translateZ(30px);
+        }
+
+        .stat-number {
+            margin-top: 14px;
+
+            font-size: 28px;
+            font-weight: 900;
+
+            transform:
+                translateZ(20px);
+        }
+
+        .stat-label {
+            margin-top: 2px;
+
+            color:
+                rgba(255,255,255,.48);
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* ================= ACCOUNT SECTION ================= */
+
+        .account-section {
+            position: relative;
+            z-index: 3;
+
+            margin-top: 28px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.04);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .account-section h3 {
+            margin-bottom: 18px;
+
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .info-row {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color:
+                rgba(255,255,255,.45);
+
+            font-size: 12px;
+        }
+
+        .info-value {
+            color:
+                rgba(255,255,255,.82);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            text-align: right;
+
+            word-break: break-word;
+        }
+
+        .active-status {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 7px;
+
+            color: #86efac;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 12px rgba(34,197,94,.65);
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            position: relative;
+            z-index: 4;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 14px;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding:
+                13px 22px;
+
+            border-radius: 13px;
+
+            color: #fff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            transition: .3s ease;
+        }
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 12px 28px rgba(124,58,237,.28),
+                inset 0 1px 1px rgba(255,255,255,.25);
+        }
+
+        .btn-secondary {
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid rgba(255,255,255,.10);
+        }
+
+        .btn:hover {
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 18px 35px rgba(0,0,0,.30);
+        }
+
+        .btn-edit {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 12px 28px rgba(37,99,235,.25),
+                inset 0 1px 1px rgba(255,255,255,.25);
+        }
+
+        .btn-password {
+            background:
+                linear-gradient(
+                    135deg,
+                    #9333ea,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 28px rgba(147,51,234,.25),
+                inset 0 1px 1px rgba(255,255,255,.25);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding:
+                35px 20px;
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,.42);
+
+            font-size: 13px;
+
+            border-top:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(0,0,0,.15);
+        }
+
+        footer strong {
+            color: #a78bfa;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 950px) {
+
+            .nav-links a {
+                padding:
+                    8px 9px;
+
+                font-size: 12px;
+            }
+
+            .profile-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats {
+                grid-template-columns:
+                    repeat(3,1fr);
+            }
+
+            .photo-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .photo-controls {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 720px) {
+
+            .navbar {
+                flex-direction: column;
+
+                gap: 10px;
+
+                padding:
+                    13px 18px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+            .profile-card {
+                padding: 25px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .info-row {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 6px;
+            }
+
+            .info-value {
+                text-align: left;
+            }
+
+            .photo-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .profile-container {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .profile-card {
+                padding: 20px;
+                border-radius: 24px;
+            }
+
+            .profile-info h2 {
+                font-size: 27px;
+            }
+
+            .avatar-wrapper {
+                width: 125px;
+                height: 125px;
+            }
+
+            .avatar {
+                width: 108px;
+                height: 108px;
+                font-size: 48px;
+            }
+
+            .account-section {
+                padding: 20px;
+            }
+
+            .nav-links {
+                gap: 4px;
+            }
+
+            .nav-links a {
+                padding:
+                    7px 8px;
+
+                font-size: 11px;
+            }
+
+            .photo-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .photo-preview {
+                width: 95px;
+                height: 95px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= ANIMATED BACKGROUND ================= -->
+
+    <div class="grid-bg"></div>
+
+    <div class="orb one"></div>
+
+    <div class="orb two"></div>
+
+    <div class="orb three"></div>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('homepage') }}"
+            class="logo"
+        >
+
+            <img
+                src="{{ url_for('static', filename='logo.png') }}"
+                alt="EduCareNix Logo"
+                class="logo-icon"
+            >
+
+            EduCareNix
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('homepage') }}">
+                🏠 Home
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+                📊 Dashboard
+            </a>
+
+            <a href="{{ url_for('courses') }}">
+                📚 Courses
+            </a>
+
+            <a href="{{ url_for('progress') }}">
+                📈 My Progress
+            </a>
+
+            <a
+                href="{{ url_for('profile') }}"
+                class="active"
+            >
+                👤 Profile
+            </a>
+
+            <a href="{{ url_for('badges') }}">
+                🏆 Badges
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <header class="hero">
+
+        <div class="hero-badge">
+            👤 STUDENT PROFILE
+        </div>
+
+        <h1>
+            My Profile
+        </h1>
+
+        <p>
+            View your learning information, achievements,
+            progress and EduCareNix learning journey.
+        </p>
+
+    </header>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <main class="profile-container">
+
+        <section
+            class="profile-card"
+            id="profileCard"
+        >
+
+
+            <!-- ================= PROFILE TOP ================= -->
+
+            <div class="profile-top">
+
+
+                <!-- AVATAR -->
+
+                <div class="avatar-wrapper">
+
+                    <div class="avatar-ring"></div>
+
+                    <div class="avatar">
+
+                        <!-- PROFILE PHOTO WILL BE DISPLAYED HERE -->
+
+                        <span id="defaultAvatar">
+                            👤
+                        </span>
+
+                        <img
+                            id="mainProfilePhoto"
+                            src=""
+                            alt="Profile Photo"
+                        >
+
+                    </div>
+
+                    <div class="online"></div>
+
+                </div>
+
+
+                <!-- PROFILE INFO -->
+
+                <div class="profile-info">
+
+                    <div class="student-label">
+                        🎓 EDUCARE NIX STUDENT
+                    </div>
+
+                    <h2>
+                        {{ user['name'] }}
+                    </h2>
+
+                    <div class="email">
+                        📧 {{ user['email'] }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= PROFILE PHOTO ================= -->
+
+            <div class="photo-section">
+
+                <div class="photo-heading">
+
+                    <h3>
+                        📸 Profile Photo
+                    </h3>
+
+                    <span>
+                        Personalize your profile
+                    </span>
+
+                </div>
+
+
+                <div class="photo-content">
+
+
+                    <!-- PHOTO PREVIEW -->
+
+                    <div class="photo-preview">
+
+                        <div class="photo-preview-inner">
+
+                            <span id="photoPlaceholder">
+                                👤
+                            </span>
+
+                            <img
+                                id="photoPreview"
+                                src=""
+                                alt="Selected Profile Photo"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UPLOAD CONTROLS -->
+
+                    <div class="photo-controls">
+
+                        <p>
+                            Upload a profile picture to personalize
+                            your EduCareNix account. Select a clear
+                            JPG, JPEG, PNG or WEBP image.
+                        </p>
+
+
+                        <!--
+                            BACKEND ROUTE WILL BE CONNECTED
+                            IN THE NEXT STEP
+                        -->
+
+                        <form
+                            action="/profile/upload-photo"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            id="photoForm"
+                        >
+
+                            <label
+                                for="profilePhotoInput"
+                                class="upload-label"
+                            >
+
+                                📷 Choose Profile Photo
+
+                            </label>
+
+
+                            <input
+                                type="file"
+                                id="profilePhotoInput"
+                                name="profile_photo"
+                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                            >
+
+
+                            <div class="upload-hint">
+
+                                Supported: JPG, JPEG, PNG, WEBP
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= STATS ================= -->
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        ⭐
+                    </div>
+
+                    <div class="stat-number">
+                        {{ user['points'] }}
+                    </div>
+
+                    <div class="stat-label">
+                        Learning Points
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🏆
+                    </div>
+
+                    <div class="stat-number">
+                        {{ badge_count }}
+                    </div>
+
+                    <div class="stat-label">
+                        Badges Earned
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        📚
+                    </div>
+
+                    <div class="stat-number">
+                        {{ completed_lessons }}
+                    </div>
+
+                    <div class="stat-label">
+                        Lessons Completed
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ACCOUNT INFO ================= -->
+
+            <div class="account-section">
+
+                <h3>
+                    🔐 Account Information
+                </h3>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Full Name
+                    </span>
+
+                    <span class="info-value">
+                        {{ user['name'] }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Email Address
+                    </span>
+
+                    <span class="info-value">
+                        {{ user['email'] }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Account Type
+                    </span>
+
+                    <span class="info-value">
+                        👨‍🎓 Student
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+                        Learning Status
+                    </span>
+
+                    <span class="info-value active-status">
+
+                        <span class="status-dot"></span>
+
+                        Active Learner
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= ACTIONS ================= -->
+
+            <div class="actions">
+
+
+                <!-- MY PROGRESS -->
+
+                <a
+                    href="{{ url_for('progress') }}"
+                    class="btn btn-primary"
+                >
+                    📊 My Progress →
+                </a>
+
+
+                <!-- MY BADGES -->
+
+                <a
+                    href="{{ url_for('badges') }}"
+                    class="btn btn-secondary"
+                >
+                    🏆 My Badges
+                </a>
+
+
+                <!-- DASHBOARD -->
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="btn btn-secondary"
+                >
+                    🏠 Dashboard
+                </a>
+
+
+                <!-- EDIT PROFILE -->
+
+                <a
+                    href="{{ url_for('edit_profile') }}"
+                    class="btn btn-edit"
+                >
+                    ✏️ Edit Profile
+                </a>
+
+
+                <!-- CHANGE PASSWORD -->
+
+                <a
+                    href="{{ url_for('change_password') }}"
+                    class="btn btn-password"
+                >
+                    🔐 Change Password
+                </a>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        © 2026
+
+        <strong>
+            EduCareNix
+        </strong>
+
+        · Learn. Practice. Achieve.
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* ================= 3D CARD EFFECT ================= */
+
+        const card =
+            document.getElementById("profileCard");
+
+
+        if (card) {
+
+            card.addEventListener(
+                "mousemove",
+                function(e) {
+
+                    const rect =
+                        card.getBoundingClientRect();
+
+                    const x =
+                        e.clientX - rect.left;
+
+                    const y =
+                        e.clientY - rect.top;
+
+                    const centerX =
+                        rect.width / 2;
+
+                    const centerY =
+                        rect.height / 2;
+
+                    const rotateY =
+                        ((x - centerX) / centerX) * 2.5;
+
+                    const rotateX =
+                        ((centerY - y) / centerY) * 2.5;
+
+                    card.style.transform =
+                        `perspective(1200px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)
+                         translateY(-4px)`;
+
+                }
+            );
+
+
+            card.addEventListener(
+                "mouseleave",
+                function() {
+
+                    card.style.transform =
+                        "perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0)";
+
+                }
+            );
+
+        }
+
+
+        /* ================= PHOTO PREVIEW ================= */
+
+        const photoInput =
+            document.getElementById("profilePhotoInput");
+
+        const photoPreview =
+            document.getElementById("photoPreview");
+
+        const photoPlaceholder =
+            document.getElementById("photoPlaceholder");
+
+        const mainProfilePhoto =
+            document.getElementById("mainProfilePhoto");
+
+        const defaultAvatar =
+            document.getElementById("defaultAvatar");
+
+
+        if (photoInput) {
+
+            photoInput.addEventListener(
+                "change",
+                function() {
+
+                    const file =
+                        this.files[0];
+
+                    if (!file) {
+                        return;
+                    }
+
+
+                    /* FILE TYPE CHECK */
+
+                    const allowedTypes = [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp"
+                    ];
+
+
+                    if (
+                        !allowedTypes.includes(
+                            file.type
+                        )
+                    ) {
+
+                        alert(
+                            "Please select a JPG, JPEG, PNG or WEBP image."
+                        );
+
+                        this.value = "";
+
+                        return;
+                    }
+
+
+                    /* FILE SIZE CHECK */
+
+                    const maxSize =
+                        5 * 1024 * 1024;
+
+
+                    if (file.size > maxSize) {
+
+                        alert(
+                            "Profile photo must be smaller than 5 MB."
+                        );
+
+                        this.value = "";
+
+                        return;
+                    }
+
+
+                    /* PREVIEW */
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload =
+                        function(e) {
+
+                            const imageURL =
+                                e.target.result;
+
+
+                            photoPreview.src =
+                                imageURL;
+
+                            photoPreview.style.display =
+                                "block";
+
+
+                            photoPlaceholder.style.display =
+                                "none";
+
+
+                            mainProfilePhoto.src =
+                                imageURL;
+
+                            mainProfilePhoto.style.display =
+                                "block";
+
+
+                            defaultAvatar.style.display =
+                                "none";
+
+                        };
+
+
+                    reader.readAsDataURL(file);
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login | EduCareNix</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 15%,
+                    rgba(99, 102, 241, 0.28),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(6, 182, 212, 0.22),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(139, 92, 246, 0.14),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #050816,
+                    #0b1026 48%,
+                    #070a18
+                );
+
+            color: white;
+
+            overflow-x: hidden;
+        }
+
+
+
+        /* ================= BACKGROUND GRID ================= */
+
+        .background-grid {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.13;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(255,255,255,0.04) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
+
+            z-index: 0;
+        }
+
+
+
+        /* ================= FLOATING ORBS ================= */
+
+        .orb {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            filter: blur(4px);
+
+            z-index: 0;
+        }
+
+
+        .orb-one {
+
+            width: 300px;
+            height: 300px;
+
+            left: -130px;
+            top: 18%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(99,102,241,0.22),
+                    transparent 70%
+                );
+
+            animation:
+                floatOne 9s ease-in-out infinite;
+        }
+
+
+        .orb-two {
+
+            width: 270px;
+            height: 270px;
+
+            right: -110px;
+            bottom: 10%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(34,211,238,0.18),
+                    transparent 70%
+                );
+
+            animation:
+                floatTwo 10s ease-in-out infinite;
+        }
+
+
+        .orb-three {
+
+            width: 180px;
+            height: 180px;
+
+            right: 20%;
+            top: 5%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(168,85,247,0.12),
+                    transparent 70%
+                );
+
+            animation:
+                floatThree 7s ease-in-out infinite;
+        }
+
+
+
+        @keyframes floatOne {
+
+            0%, 100% {
+                transform:
+                    translate(0, 0);
+            }
+
+            50% {
+                transform:
+                    translate(35px, -35px);
+            }
+        }
+
+
+        @keyframes floatTwo {
+
+            0%, 100% {
+                transform:
+                    translate(0, 0);
+            }
+
+            50% {
+                transform:
+                    translate(-30px, 25px);
+            }
+        }
+
+
+        @keyframes floatThree {
+
+            0%, 100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(25px);
+            }
+        }
+
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            position: relative;
+
+            z-index: 10;
+
+            width: 100%;
+
+            padding: 18px 7%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background:
+                rgba(5, 8, 22, 0.65);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+
+
+        /* ================= NAVBAR LOGO ================= */
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+
+            white-space: nowrap;
+        }
+
+
+        .logo img {
+
+            width: 42px;
+
+            height: 42px;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 10px;
+
+            filter:
+                drop-shadow(
+                    0 5px 12px
+                    rgba(99,102,241,0.35)
+                );
+
+            transition: 0.3s ease;
+        }
+
+
+        .logo:hover img {
+
+            transform:
+                scale(1.06)
+                rotate(-2deg);
+        }
+
+
+        .logo-name {
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a5b4fc,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+
+        /* ================= NAV LINKS ================= */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+        }
+
+
+        .nav-links a {
+
+            color:
+                #cbd5e1;
+
+            text-decoration:
+                none;
+
+            font-size:
+                14px;
+
+            font-weight:
+                650;
+
+            transition:
+                0.3s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color:
+                white;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .nav-signup {
+
+            padding:
+                9px 17px;
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(99,102,241,0.14);
+
+            border:
+                1px solid
+                rgba(129,140,248,0.25);
+
+            color:
+                #c7d2fe !important;
+        }
+
+
+        .nav-signup:hover {
+
+            background:
+                rgba(99,102,241,0.25);
+        }
+
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+
+            min-height:
+                calc(100vh - 73px);
+
+            display: flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            padding:
+                55px 20px;
+
+            position:
+                relative;
+
+            z-index:
+                2;
+        }
+
+
+        .login-wrapper {
+
+            width:
+                100%;
+
+            max-width:
+                1100px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                35px;
+
+            align-items:
+                center;
+        }
+
+
+
+        /* ================= LEFT CONTENT ================= */
+
+        .intro {
+
+            padding:
+                20px 15px;
+        }
+
+
+        .eyebrow {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                8px 14px;
+
+            border-radius:
+                30px;
+
+            background:
+                rgba(99,102,241,0.10);
+
+            border:
+                1px solid
+                rgba(129,140,248,0.22);
+
+            color:
+                #a5b4fc;
+
+            font-size:
+                11px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1.5px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+
+        /* ================= MAIN LOGO ================= */
+
+        .main-logo {
+
+            width:
+                110px;
+
+            height:
+                110px;
+
+            object-fit:
+                contain;
+
+            display:
+                block;
+
+            margin:
+                0 0 18px 0;
+
+            border-radius:
+                24px;
+
+            filter:
+                drop-shadow(
+                    0 15px 30px
+                    rgba(99,102,241,0.28)
+                );
+
+            animation:
+                mainLogoFloat
+                3.5s
+                ease-in-out
+                infinite;
+
+            transition:
+                0.3s ease;
+        }
+
+
+        .main-logo:hover {
+
+            transform:
+                scale(1.04)
+                rotate(-2deg);
+        }
+
+
+        @keyframes mainLogoFloat {
+
+            0%, 100% {
+
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+
+                transform:
+                    translateY(-7px);
+            }
+        }
+
+
+
+        /* ================= INTRO TITLE ================= */
+
+        .intro h1 {
+
+            font-size:
+                clamp(42px, 5vw, 65px);
+
+            line-height:
+                1.02;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -2px;
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .gradient-text {
+
+            display:
+                block;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff 5%,
+                    #a5b4fc 45%,
+                    #67e8f9 90%
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .intro p {
+
+            max-width:
+                540px;
+
+            color:
+                #94a3b8;
+
+            font-size:
+                15px;
+
+            line-height:
+                1.8;
+
+            margin-bottom:
+                28px;
+        }
+
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                12px;
+
+            max-width:
+                510px;
+        }
+
+
+        .feature {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                13px;
+
+            border-radius:
+                14px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            transition:
+                0.3s ease;
+        }
+
+
+        .feature:hover {
+
+            transform:
+                translateY(-4px);
+
+            background:
+                rgba(255,255,255,0.065);
+
+            border-color:
+                rgba(103,232,249,0.18);
+        }
+
+
+        .feature-icon {
+
+            width:
+                39px;
+
+            height:
+                39px;
+
+            flex-shrink:
+                0;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            border-radius:
+                11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99,102,241,0.22),
+                    rgba(34,211,238,0.12)
+                );
+
+            font-size:
+                18px;
+        }
+
+
+        .feature-text {
+
+            color:
+                #cbd5e1;
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+        }
+
+
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-card {
+
+            width:
+                100%;
+
+            padding:
+                43px;
+
+            border-radius:
+                28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.105),
+                    rgba(255,255,255,0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.13);
+
+            backdrop-filter:
+                blur(28px);
+
+            -webkit-backdrop-filter:
+                blur(28px);
+
+            box-shadow:
+
+                0 35px 90px
+                rgba(0,0,0,0.48),
+
+                inset 0 1px 0
+                rgba(255,255,255,0.09);
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            animation:
+                cardAppear
+                0.8s
+                ease
+                forwards;
+        }
+
+
+        .login-card::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                180px;
+
+            height:
+                180px;
+
+            top:
+                -90px;
+
+            right:
+                -90px;
+
+            background:
+                rgba(99,102,241,0.18);
+
+            border-radius:
+                50%;
+
+            filter:
+                blur(20px);
+        }
+
+
+        .login-card::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                140px;
+
+            height:
+                140px;
+
+            bottom:
+                -80px;
+
+            left:
+                -70px;
+
+            background:
+                rgba(34,211,238,0.12);
+
+            border-radius:
+                50%;
+
+            filter:
+                blur(20px);
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(30px)
+                    scale(0.97);
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        .card-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+        }
+
+
+
+        /* ================= LOGIN ICON ================= */
+
+        .login-icon {
+
+            width:
+                76px;
+
+            height:
+                76px;
+
+            margin:
+                0 auto 20px;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            border-radius:
+                22px;
+
+            font-size:
+                34px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(99,102,241,0.30),
+                    rgba(34,211,238,0.13)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.13);
+
+            box-shadow:
+
+                0 16px 38px
+                rgba(0,0,0,0.28),
+
+                inset 0 1px 0
+                rgba(255,255,255,0.12);
+
+            animation:
+                loginIconFloat
+                3s
+                ease-in-out
+                infinite;
+        }
+
+
+        @keyframes loginIconFloat {
+
+            0%, 100% {
+
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+
+                transform:
+                    translateY(-6px);
+            }
+        }
+
+
+
+        /* ================= LOGIN HEADINGS ================= */
+
+        .login-label {
+
+            text-align:
+                center;
+
+            color:
+                #67e8f9;
+
+            font-size:
+                11px;
+
+            font-weight:
+                850;
+
+            letter-spacing:
+                2px;
+
+            margin-bottom:
+                9px;
+        }
+
+
+        .login-card h2 {
+
+            text-align:
+                center;
+
+            font-size:
+                31px;
+
+            font-weight:
+                850;
+
+            margin-bottom:
+                9px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #c7d2fe,
+                    #67e8f9
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .card-description {
+
+            text-align:
+                center;
+
+            color:
+                #94a3b8;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.65;
+
+            margin-bottom:
+                28px;
+        }
+
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom:
+                19px;
+        }
+
+
+        .form-group label {
+
+            display:
+                block;
+
+            color:
+                #dbeafe;
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                8px;
+        }
+
+
+        .input-wrapper {
+
+            position:
+                relative;
+        }
+
+
+        .input-icon {
+
+            position:
+                absolute;
+
+            left:
+                16px;
+
+            top:
+                50%;
+
+            transform:
+                translateY(-50%);
+
+            font-size:
+                16px;
+
+            opacity:
+                0.85;
+
+            pointer-events:
+                none;
+        }
+
+
+        .form-control {
+
+            width:
+                100%;
+
+            padding:
+                14px 16px 14px 46px;
+
+            border-radius:
+                14px;
+
+            outline:
+                none;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            background:
+                rgba(4,9,24,0.58);
+
+            color:
+                white;
+
+            font-size:
+                14px;
+
+            transition:
+                0.3s ease;
+
+            box-shadow:
+                inset 0 1px 4px
+                rgba(0,0,0,0.25);
+        }
+
+
+        .form-control::placeholder {
+
+            color:
+                #64748b;
+        }
+
+
+        .form-control:focus {
+
+            border-color:
+                rgba(103,232,249,0.65);
+
+            background:
+                rgba(7,13,31,0.78);
+
+            box-shadow:
+
+                0 0 0 4px
+                rgba(34,211,238,0.07),
+
+                0 12px 30px
+                rgba(0,0,0,0.17);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+
+            width:
+                100%;
+
+            padding:
+                16px;
+
+            margin-top:
+                5px;
+
+            border:
+                none;
+
+            border-radius:
+                14px;
+
+            color:
+                white;
+
+            font-size:
+                14px;
+
+            font-weight:
+                850;
+
+            letter-spacing:
+                0.3px;
+
+            cursor:
+                pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #4f46e5,
+                    #0891b2
+                );
+
+            box-shadow:
+                0 14px 32px
+                rgba(79,70,229,0.32);
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .login-btn::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            top:
+                0;
+
+            left:
+                -100%;
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.28),
+                    transparent
+                );
+
+            transition:
+                0.55s;
+        }
+
+
+        .login-btn:hover::before {
+
+            left:
+                100%;
+        }
+
+
+        .login-btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 20px 42px
+                rgba(79,70,229,0.43);
+        }
+
+
+        .login-btn:active {
+
+            transform:
+                translateY(-1px)
+                scale(0.99);
+        }
+
+
+
+        /* ================= SIGNUP ================= */
+
+        .new-user {
+
+            text-align:
+                center;
+
+            margin-top:
+                24px;
+
+            padding-top:
+                21px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            color:
+                #94a3b8;
+
+            font-size:
+                12px;
+        }
+
+
+        .new-user-title {
+
+            color:
+                #67e8f9;
+
+            font-size:
+                10px;
+
+            font-weight:
+                850;
+
+            letter-spacing:
+                1.5px;
+
+            margin-bottom:
+                7px;
+        }
+
+
+        .new-user a {
+
+            color:
+                #a5b4fc;
+
+            font-weight:
+                800;
+
+            text-decoration:
+                none;
+
+            transition:
+                0.3s ease;
+        }
+
+
+        .new-user a:hover {
+
+            color:
+                #67e8f9;
+        }
+
+
+
+        /* ================= SECURITY ================= */
+
+        .security {
+
+            margin-top:
+                19px;
+
+            padding:
+                11px;
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(34,211,238,0.045);
+
+            border:
+                1px solid
+                rgba(34,211,238,0.09);
+
+            color:
+                #64748b;
+
+            font-size:
+                10px;
+
+            text-align:
+                center;
+        }
+
+
+        .security strong {
+
+            color:
+                #67e8f9;
+        }
+
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            position:
+                relative;
+
+            z-index:
+                3;
+
+            text-align:
+                center;
+
+            padding:
+                18px;
+
+            color:
+                #64748b;
+
+            font-size:
+                11px;
+        }
+
+
+        .footer span {
+
+            color:
+                #818cf8;
+
+            font-weight:
+                750;
+        }
+
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .login-wrapper {
+
+                grid-template-columns:
+                    1fr;
+
+                max-width:
+                    500px;
+            }
+
+
+            .intro {
+
+                text-align:
+                    center;
+            }
+
+
+            .intro p {
+
+                margin-left:
+                    auto;
+
+                margin-right:
+                    auto;
+            }
+
+
+            .features {
+
+                margin:
+                    0 auto;
+            }
+
+
+            .main-logo {
+
+                margin:
+                    0 auto 18px;
+            }
+        }
+
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                justify-content:
+                    center;
+            }
+
+
+            .nav-links {
+
+                display:
+                    none;
+            }
+
+
+            .logo-name {
+
+                font-size:
+                    19px;
+            }
+
+
+            .logo img {
+
+                width:
+                    38px;
+
+                height:
+                    38px;
+            }
+
+
+            .main {
+
+                padding:
+                    35px 15px;
+            }
+
+
+            .main-logo {
+
+                width:
+                    85px;
+
+                height:
+                    85px;
+
+                border-radius:
+                    20px;
+            }
+
+
+            .login-card {
+
+                padding:
+                    34px 24px;
+
+                border-radius:
+                    22px;
+            }
+
+
+            .login-card h2 {
+
+                font-size:
+                    28px;
+            }
+
+
+            .login-icon {
+
+                width:
+                    68px;
+
+                height:
+                    68px;
+
+                font-size:
+                    30px;
+            }
+
+
+            .intro h1 {
+
+                font-size:
+                    43px;
+            }
+        }
+
+
+
+        @media (max-width: 420px) {
+
+            .login-card {
+
+                padding:
+                    30px 19px;
+            }
+
+
+            .features {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .intro h1 {
+
+                font-size:
+                    38px;
+            }
+
+
+            .main-logo {
+
+                width:
+                    75px;
+
+                height:
+                    75px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= BACKGROUND ================= -->
+
+    <div class="background-grid"></div>
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+
+        <a
+            href="{{ url_for('homepage') }}"
+            class="logo"
+        >
+
+            <img
+                src="{{ url_for('static', filename='logo.png') }}"
+                alt="EduCareNix Logo"
+            >
+
+            <span class="logo-name">
+                EduCareNix
+            </span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('homepage') }}">
+                🏠 Home
+            </a>
+
+
+            <a href="{{ url_for('login') }}">
+                🔐 Login
+            </a>
+
+
+            <a
+                href="{{ url_for('signup') }}"
+                class="nav-signup"
+            >
+                ✨ Sign Up
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <div class="login-wrapper">
+
+
+            <!-- ================= LEFT CONTENT ================= -->
+
+            <section class="intro">
+
+
+                <div class="eyebrow">
+                    ✨ SMART LEARNING PLATFORM
+                </div>
+
+
+                <!-- EXISTING LOGO -->
+
+                <img
+                    src="{{ url_for('static', filename='logo.png') }}"
+                    alt="EduCareNix Logo"
+                    class="main-logo"
+                >
+
+
+                <h1>
+
+                    <span class="gradient-text">
+                        Learn.
+                    </span>
+
+                    <span class="gradient-text">
+                        Practice.
+                    </span>
+
+                    <span class="gradient-text">
+                        Achieve.
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Welcome to EduCareNix — a smart learning
+                    platform designed to help students build
+                    skills, practice knowledge and track their
+                    learning journey.
+
+                </p>
+
+
+
+                <!-- ================= FEATURES ================= -->
+
+                <div class="features">
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📚
+                        </div>
+
+                        <div class="feature-text">
+                            Interactive Courses
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🧠
+                        </div>
+
+                        <div class="feature-text">
+                            Smart Quizzes
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🏆
+                        </div>
+
+                        <div class="feature-text">
+                            Earn Badges
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📊
+                        </div>
+
+                        <div class="feature-text">
+                            Track Progress
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= LOGIN CARD ================= -->
+
+            <section class="login-card">
+
+
+                <div class="card-content">
+
+
+                    <div class="login-icon">
+                        🔐
+                    </div>
+
+
+                    <div class="login-label">
+                        SECURE LOGIN
+                    </div>
+
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+
+                    <p class="card-description">
+
+                        Login to your EduCareNix account and
+                        continue your learning journey.
+
+                    </p>
+
+
+
+                    <!-- ================= FORM ================= -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('login') }}"
+                    >
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <span class="input-icon">
+                                    📧
+                                </span>
+
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="Enter your email address"
+                                    required
+                                    autocomplete="email"
+                                >
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="form-group">
+
+
+                            <label for="password">
+                                Password
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+
+                                <span class="input-icon">
+                                    🔒
+                                </span>
+
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Enter your password"
+                                    required
+                                    autocomplete="current-password"
+                                >
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LOGIN BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="login-btn"
+                        >
+
+                            🚀
+                            Login to EduCareNix
+
+                            <span>
+                                →
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+
+
+                    <!-- ================= SIGNUP ================= -->
+
+                    <div class="new-user">
+
+
+                        <div class="new-user-title">
+                            NEW TO EDUCARENIX?
+                        </div>
+
+
+                        Don't have an account?
+
+
+                        <a href="{{ url_for('signup') }}">
+                            Create Your Account →
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- ================= SECURITY ================= -->
+
+                    <div class="security">
+
+                        🛡️
+
+                        Your login information is
+
+                        <strong>
+                            securely protected
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        © 2026
+
+        <span>
+            EduCareNix
+        </span>
+
+        • Smart Learning & Skill Platform
+
+    </footer>
+
+
+</body>
+</html>

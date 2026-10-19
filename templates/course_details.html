@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ course['title'] }} | EduCareNix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #070b18;
+            --card: rgba(18, 25, 48, 0.72);
+            --card2: rgba(25, 34, 62, 0.75);
+            --border: rgba(255, 255, 255, 0.10);
+            --text: #f5f7ff;
+            --muted: #aab3cf;
+            --blue: #5b8cff;
+            --cyan: #22d3ee;
+            --purple: #9b5cff;
+            --green: #36e59a;
+            --yellow: #ffd54a;
+            --red: #ff5c75;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(91, 140, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 85% 20%, rgba(155, 92, 255, 0.16), transparent 30%),
+                radial-gradient(circle at 50% 90%, rgba(34, 211, 238, 0.10), transparent 35%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            z-index: -2;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb.one {
+            width: 280px;
+            height: 280px;
+            background: rgba(91, 140, 255, 0.15);
+            top: 80px;
+            left: -100px;
+        }
+
+        .orb.two {
+            width: 320px;
+            height: 320px;
+            background: rgba(155, 92, 255, 0.12);
+            right: -120px;
+            top: 350px;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 11, 24, 0.78);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            padding: 5px;
+        }
+
+        .brand span {
+            background: linear-gradient(90deg, #fff, #7ea5ff, #c78cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-back {
+            color: var(--muted);
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .nav-back:hover {
+            color: white;
+            border-color: rgba(91,140,255,0.6);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN */
+
+        .page {
+            width: min(1200px, 92%);
+            margin: 45px auto 80px;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            background: linear-gradient(
+                135deg,
+                rgba(22,31,60,0.86),
+                rgba(10,15,31,0.78)
+            );
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -80px;
+            top: -100px;
+            border-radius: 50%;
+            background: rgba(91,140,255,0.12);
+            filter: blur(40px);
+        }
+
+        .course-icon {
+            min-width: 120px;
+            width: 120px;
+            height: 120px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 58px;
+            background: linear-gradient(
+                145deg,
+                rgba(91,140,255,0.25),
+                rgba(155,92,255,0.20)
+            );
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.30),
+                inset 0 1px 0 rgba(255,255,255,0.10);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .level {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #bcd0ff;
+            background: rgba(91,140,255,0.13);
+            border: 1px solid rgba(91,140,255,0.25);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 58px);
+            line-height: 1.05;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #ffffff, #9bb7ff, #d0a2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 780px;
+        }
+
+        /* STATS */
+
+        .course-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .stat {
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid var(--border);
+            color: #dce3fa;
+            font-size: 14px;
+        }
+
+        .stat strong {
+            color: white;
+        }
+
+        /* SECTION */
+
+        .section {
+            margin-top: 45px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* LESSONS */
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .lesson-card {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+            transition: 0.3s;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(91,140,255,0.5);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+        }
+
+        .lesson-number {
+            min-width: 48px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-info h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .lesson-info p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .lesson-arrow {
+            font-size: 22px;
+            color: #8daeff;
+        }
+
+        .empty-box {
+            padding: 35px;
+            text-align: center;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* REVIEW SUMMARY */
+
+        .review-summary {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 25px;
+            padding: 28px;
+            border-radius: 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+
+        .rating-main {
+            text-align: center;
+            padding: 20px;
+            border-right: 1px solid var(--border);
+        }
+
+        .big-rating {
+            font-size: 58px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffd54a, #ff9f43);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .big-stars {
+            color: var(--yellow);
+            font-size: 25px;
+            letter-spacing: 3px;
+            margin: 5px 0 10px;
+        }
+
+        .rating-main p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .breakdown {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .rating-row {
+            display: grid;
+            grid-template-columns: 45px 1fr 45px;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .rating-bar {
+            height: 10px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ffd54a, #ff9f43);
+        }
+
+        /* REVIEW FORM */
+
+        .review-form-card {
+            margin-top: 25px;
+            padding: 28px;
+            border-radius: 24px;
+            background: linear-gradient(
+                135deg,
+                rgba(25,34,62,0.82),
+                rgba(15,21,42,0.82)
+            );
+            border: 1px solid var(--border);
+        }
+
+        .review-form-card h3 {
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .star-picker {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .star-picker button {
+            border: none;
+            background: transparent;
+            color: #536078;
+            font-size: 38px;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 0;
+        }
+
+        .star-picker button:hover,
+        .star-picker button.active {
+            color: var(--yellow);
+            transform: scale(1.12);
+        }
+
+        .review-textarea {
+            width: 100%;
+            min-height: 130px;
+            resize: vertical;
+            padding: 16px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            outline: none;
+            background: rgba(0,0,0,0.22);
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .review-textarea:focus {
+            border-color: rgba(91,140,255,0.7);
+        }
+
+        .review-textarea::placeholder {
+            color: #69738e;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 22px;
+            border-radius: 13px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            box-shadow: 0 10px 25px rgba(91,140,255,0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: rgba(255,92,117,0.12);
+            color: #ff8094;
+            border: 1px solid rgba(255,92,117,0.25);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255,92,117,0.2);
+        }
+
+        /* REVIEWS */
+
+        .reviews-list {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review-card {
+            padding: 23px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .review-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+        }
+
+        .student-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+        }
+
+        .student-name {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .review-stars {
+            color: var(--yellow);
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        .review-content {
+            margin-top: 17px;
+            color: #cbd3e9;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* CERTIFICATE */
+
+        .certificate {
+            margin-top: 45px;
+            padding: 35px;
+            border-radius: 25px;
+            text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(54,229,154,0.10),
+                    rgba(91,140,255,0.10)
+                );
+            border: 1px solid rgba(54,229,154,0.22);
+        }
+
+        .certificate-icon {
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+
+        .certificate h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .certificate p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .certificate-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            padding: 13px 24px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #19b878, #168de2);
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .certificate-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* BACK */
+
+        .back-wrapper {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #68728c;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 20px;
+            }
+
+            .course-icon {
+                min-width: 100px;
+                width: 100px;
+                height: 100px;
+            }
+
+            .course-stats {
+                justify-content: center;
+            }
+
+            .lesson-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .rating-main {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 25px;
+            }
+
+            .review-top {
+                flex-direction: column;
+            }
+
+            .review-stars {
+                padding-left: 59px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 14px 4%;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .brand img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .nav-back {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .page {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 23px;
+            }
+
+            .review-summary,
+            .review-form-card {
+                padding: 20px;
+            }
+
+            .star-picker button {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+
+    <!-- NAVBAR -->
+    <nav>
+
+        <a href="{{ url_for('courses') }}" class="brand">
+
+            <img src="{{ url_for('static', filename='logo.png') }}"
+                 alt="EduCareNix Logo">
+
+            <span>EduCareNix</span>
+
+        </a>
+
+        <a href="{{ url_for('courses') }}" class="nav-back">
+            ← Courses
+        </a>
+
+    </nav>
+
+
+    <main class="page">
+
+        <!-- COURSE HERO -->
+        <section class="hero">
+
+            <div class="course-icon">
+
+                {% set title_lower = course['title']|lower %}
+
+                {% if 'python' in title_lower %}
+                    🐍
+                {% elif 'web' in title_lower %}
+                    🌐
+                {% elif 'data' in title_lower %}
+                    📊
+                {% elif 'c programming' in title_lower %}
+                    💻
+                {% elif 'data structure' in title_lower %}
+                    🧠
+                {% else %}
+                    📚
+                {% endif %}
+
+            </div>
+
+
+            <div class="hero-content">
+
+                <span class="level">
+                    {{ course['level'] }}
+                </span>
+
+                <h1>
+                    {{ course['title'] }}
+                </h1>
+
+                <p>
+                    {{ course['description'] }}
+                </p>
+
+
+                <div class="course-stats">
+
+                    <div class="stat">
+                        📖
+                        <strong>{{ total_lessons }}</strong>
+                        Lessons
+                    </div>
+
+                    <div class="stat">
+                        ✅
+                        <strong>{{ completed_lessons }}</strong>
+                        Completed
+                    </div>
+
+                    <div class="stat">
+                        📈
+                        <strong>{{ progress_percentage }}%</strong>
+                        Progress
+                    </div>
+
+                    <div class="stat">
+                        ⭐
+                        <strong>{{ "%.1f"|format(course['average_rating']|float) }}</strong>
+                        / 5
+                    </div>
+
+                    <div class="stat">
+                        💬
+                        <strong>{{ course['review_count'] }}</strong>
+                        Reviews
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LESSONS -->
+        <section class="section">
+
+            <div class="section-title">
+                📚 Course Lessons
+            </div>
+
+
+            {% if lessons %}
+
+                <div class="lesson-grid">
+
+                    {% for lesson in lessons %}
+
+                        <a href="{{ url_for('lesson', lesson_id=lesson['id']) }}"
+                           class="lesson-card">
+
+                            <div class="lesson-number">
+                                {{ loop.index }}
+                            </div>
+
+                            <div class="lesson-info">
+
+                                <h3>
+                                    {{ lesson['title'] }}
+                                </h3>
+
+                                <p>
+                                    Open lesson and start learning
+                                </p>
+
+                            </div>
+
+                            <div class="lesson-arrow">
+                                →
+                            </div>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-box">
+                    📚 No lessons are available for this course yet.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- REVIEWS -->
+        <section class="section">
+
+            <div class="section-title">
+                ⭐ Reviews & Ratings
+            </div>
+
+
+            <!-- RATING SUMMARY -->
+            <div class="review-summary">
+
+                <div class="rating-main">
+
+                    <div class="big-rating">
+                        {{ "%.1f"|format(course['average_rating']|float) }}
+                    </div>
+
+                    <div class="big-stars">
+
+                        {% set average_rating = course['average_rating']|float %}
+
+                        {% for i in range(1, 6) %}
+
+                            {% if i <= average_rating %}
+                                ★
+                            {% else %}
+                                ☆
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                    <p>
+                        {{ course['review_count'] }} review{% if course['review_count'] != 1 %}s{% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- RATING BREAKDOWN -->
+                <div class="breakdown">
+
+                    {% for rating in range(5, 0, -1) %}
+
+                        {% set count = rating_breakdown[rating]|int %}
+
+                        {% if course['review_count']|int > 0 %}
+
+                            {% set percentage =
+                                ((count * 100) / (course['review_count']|int))|round(0)|int
+                            %}
+
+                        {% else %}
+
+                            {% set percentage = 0 %}
+
+                        {% endif %}
+
+
+                        <div class="rating-row">
+
+                            <span>
+                                {{ rating }} ★
+                            </span>
+
+                            <div class="rating-bar">
+
+                                <div class="rating-fill"
+                                     style="width: {{ percentage }}%;">
+                                </div>
+
+                            </div>
+
+                            <span>
+                                {{ count }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- REVIEW FORM -->
+            <div class="review-form-card">
+
+                {% if user_review %}
+
+                    <h3>
+                        ✏️ Update Your Review
+                    </h3>
+
+                {% else %}
+
+                    <h3>
+                        ✍️ Write a Review
+                    </h3>
+
+                {% endif %}
+
+
+                <form method="POST"
+                      action="{{ url_for('submit_review', course_id=course['id']) }}">
+
+
+                    <input type="hidden"
+                           name="rating"
+                           id="ratingValue"
+                           value="{% if user_review %}{{ user_review['rating'] }}{% else %}{% endif %}"
+                           required>
+
+
+                    <div class="star-picker"
+                         id="starPicker">
+
+                        <button type="button"
+                                data-rating="1">
+                            ★
+                        </button>
+
+                        <button type="button"
+                                data-rating="2">
+                            ★
+                        </button>
+
+                        <button type="button"
+                                data-rating="3">
+                            ★
+                        </button>
+
+                        <button type="button"
+                                data-rating="4">
+                            ★
+                        </button>
+
+                        <button type="button"
+                                data-rating="5">
+                            ★
+                        </button>
+
+                    </div>
+
+
+                    <textarea
+                        name="review"
+                        class="review-textarea"
+                        maxlength="1000"
+                        placeholder="Share your learning experience..."
+                        required>{% if user_review %}{{ user_review['review'] }}{% endif %}</textarea>
+
+
+                    <div class="review-actions">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            {% if user_review %}
+                                💾 Update Review
+                            {% else %}
+                                ⭐ Submit Review
+                            {% endif %}
+
+                        </button>
+
+
+                        {% if user_review %}
+
+                            <button type="submit"
+                                    form="deleteReviewForm"
+                                    class="btn btn-danger">
+
+                                🗑️ Delete Review
+
+                            </button>
+
+                        {% endif %}
+
+                    </div>
+
+                </form>
+
+
+                {% if user_review %}
+
+                    <form id="deleteReviewForm"
+                          method="POST"
+                          action="{{ url_for('delete_review', review_id=user_review['id']) }}"
+                          onsubmit="return confirm('Are you sure you want to delete your review?');">
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ALL REVIEWS -->
+            <div class="reviews-list">
+
+                {% if reviews %}
+
+                    {% for review in reviews %}
+
+                        <div class="review-card">
+
+                            <div class="review-top">
+
+                                <div class="student-info">
+
+                                    <div class="student-avatar">
+
+                                        {{ review['student_name'][0]|upper }}
+
+                                    </div>
+
+                                    <div>
+
+                                        <div class="student-name">
+                                            {{ review['student_name'] }}
+                                        </div>
+
+                                        <div class="review-date">
+                                            {{ review['created_at'] }}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="review-stars">
+
+                                    {% for i in range(1, 6) %}
+
+                                        {% if i <= review['rating']|int %}
+                                            ★
+                                        {% else %}
+                                            ☆
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="review-content">
+                                {{ review['review'] }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-box">
+
+                        ⭐ No reviews yet.
+
+                        <br>
+
+                        Be the first student to review this course!
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- CERTIFICATE -->
+        {% if certificate %}
+
+            <section class="certificate">
+
+                <div class="certificate-icon">
+                    🏆
+                </div>
+
+                <h2>
+                    Congratulations!
+                </h2>
+
+                <p>
+                    You have completed this course and earned your certificate.
+                </p>
+
+                <a href="{{ url_for('view_certificate', certificate_id=certificate['id']) }}"
+                   class="certificate-btn">
+
+                    🎓 View Certificate
+
+                </a>
+
+            </section>
+
+        {% endif %}
+
+
+        <!-- BACK -->
+        <div class="back-wrapper">
+
+            <a href="{{ url_for('courses') }}"
+               class="back-btn">
+
+                ← Back to All Courses
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        © 2026 EduCareNix · Learn. Practice. Achieve.
+
+    </footer>
+
+
+    <!-- STAR RATING JAVASCRIPT -->
+    <script>
+
+        const ratingValue =
+            document.getElementById("ratingValue");
+
+        const starButtons =
+            document.querySelectorAll("#starPicker button");
+
+
+        function setRating(rating) {
+
+            ratingValue.value = rating;
+
+
+            starButtons.forEach(function(button) {
+
+                const buttonRating =
+                    parseInt(button.dataset.rating);
+
+                if (buttonRating <= rating) {
+
+                    button.classList.add("active");
+
+                } else {
+
+                    button.classList.remove("active");
+
+                }
+
+            });
+
+        }
+
+
+        starButtons.forEach(function(button) {
+
+            button.addEventListener("click", function() {
+
+                const rating =
+                    parseInt(this.dataset.rating);
+
+                setRating(rating);
+
+            });
+
+        });
+
+
+        const existingRating =
+            parseInt(ratingValue.value || "0");
+
+
+        if (existingRating > 0) {
+
+            setRating(existingRating);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

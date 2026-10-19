@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ quiz['title'] }} | EduCareNix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #eef4ff;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(76, 29, 149, 0.45), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.35), transparent 28%),
+                radial-gradient(circle at 50% 100%, rgba(37, 99, 235, 0.25), transparent 35%),
+                #050816;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================== */
+
+        .background-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.18;
+            background-image:
+                linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(4px);
+            opacity: .35;
+            pointer-events: none;
+            animation: floatOrb 9s ease-in-out infinite;
+        }
+
+        .orb.one {
+            width: 260px;
+            height: 260px;
+            background: #7c3aed;
+            top: 100px;
+            left: -100px;
+        }
+
+        .orb.two {
+            width: 220px;
+            height: 220px;
+            background: #06b6d4;
+            right: -80px;
+            top: 420px;
+            animation-delay: 2s;
+        }
+
+        .orb.three {
+            width: 180px;
+            height: 180px;
+            background: #2563eb;
+            left: 45%;
+            bottom: -90px;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatOrb {
+            0%,100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-30px) scale(1.08);
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 76px;
+            padding: 0 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(5, 8, 22, .78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255,255,255,.09);
+            box-shadow: 0 10px 40px rgba(0,0,0,.25);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            color: white;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: .4px;
+        }
+
+        .brand-icon {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            box-shadow:
+                0 8px 25px rgba(99,102,241,.35),
+                inset 0 1px 1px rgba(255,255,255,.3);
+
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .nav-links a {
+            color: #b9c4d8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+
+            padding: 10px 13px;
+            border-radius: 12px;
+
+            transition: .25s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255,255,255,.08);
+            transform: translateY(-2px);
+        }
+
+        .nav-links .logout {
+            color: #fca5a5;
+        }
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .container {
+            width: min(1080px, 92%);
+            margin: 45px auto 70px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================
+           QUIZ HERO
+        ========================== */
+
+        .quiz-hero {
+            position: relative;
+            overflow: hidden;
+
+            padding: 38px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,58,237,.20),
+                    rgba(37,99,235,.12)
+                ),
+                rgba(15,23,42,.72);
+
+            border: 1px solid rgba(255,255,255,.12);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.35),
+                inset 0 1px 1px rgba(255,255,255,.08);
+
+            backdrop-filter: blur(22px);
+        }
+
+        .quiz-hero::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(124,58,237,.18);
+            filter: blur(50px);
+            right: -100px;
+            top: -120px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .quiz-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .quiz-icon {
+            width: 72px;
+            height: 72px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(145deg, rgba(124,58,237,.9), rgba(37,99,235,.85));
+
+            font-size: 35px;
+
+            box-shadow:
+                0 15px 35px rgba(79,70,229,.35),
+                inset 0 2px 2px rgba(255,255,255,.25);
+
+            transform: rotate(-3deg);
+        }
+
+        .quiz-label {
+            color: #a5b4fc;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .quiz-hero h1 {
+            font-size: clamp(28px, 5vw, 44px);
+            line-height: 1.08;
+            margin-bottom: 15px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #c4b5fd,
+                #93c5fd
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quiz-description {
+            max-width: 780px;
+            color: #aebbd0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           STATS
+        ========================== */
+
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .stat {
+            padding: 17px 18px;
+            border-radius: 18px;
+
+            background: rgba(255,255,255,.045);
+            border: 1px solid rgba(255,255,255,.08);
+
+            transition: .25s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,.07);
+        }
+
+        .stat-icon {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .stat strong {
+            display: block;
+            color: white;
+            font-size: 18px;
+        }
+
+        .stat span {
+            color: #8795ab;
+            font-size: 12px;
+        }
+
+        /* =========================
+           PROGRESS
+        ========================== */
+
+        .progress-section {
+            margin: 28px 0 20px;
+            padding: 18px 20px;
+
+            border-radius: 18px;
+
+            background: rgba(15,23,42,.65);
+            border: 1px solid rgba(255,255,255,.08);
+
+            backdrop-filter: blur(16px);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            color: #aab6ca;
+            font-size: 13px;
+        }
+
+        .progress-info strong {
+            color: white;
+        }
+
+        .progress-bar {
+            height: 8px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255,255,255,.08);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+
+            background: linear-gradient(
+                90deg,
+                #7c3aed,
+                #2563eb,
+                #06b6d4
+            );
+
+            box-shadow: 0 0 18px rgba(59,130,246,.5);
+
+            transition: width .35s ease;
+        }
+
+        /* =========================
+           QUESTION CARD
+        ========================== */
+
+        .question-card {
+            margin-top: 18px;
+            padding: 30px;
+
+            border-radius: 25px;
+
+            background: rgba(15,23,42,.72);
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            box-shadow:
+                0 18px 45px rgba(0,0,0,.22),
+                inset 0 1px 1px rgba(255,255,255,.04);
+
+            backdrop-filter: blur(18px);
+
+            transition: .3s ease;
+        }
+
+        .question-card:hover {
+            border-color: rgba(129,140,248,.25);
+            transform: translateY(-2px);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 42px;
+            height: 42px;
+
+            padding: 0 13px;
+
+            border-radius: 13px;
+
+            background: linear-gradient(
+                135deg,
+                #7c3aed,
+                #2563eb
+            );
+
+            color: white;
+            font-weight: 800;
+
+            box-shadow: 0 8px 22px rgba(79,70,229,.3);
+
+            margin-bottom: 18px;
+        }
+
+        .question-card h2 {
+            color: #f8fafc;
+            font-size: 19px;
+            line-height: 1.55;
+            margin-bottom: 23px;
+        }
+
+        /* =========================
+           OPTIONS
+        ========================== */
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            position: relative;
+        }
+
+        .option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .option label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            padding: 16px 18px;
+
+            border-radius: 16px;
+
+            color: #c5d0e0;
+            font-size: 14px;
+            font-weight: 600;
+
+            background: rgba(255,255,255,.035);
+            border: 1px solid rgba(255,255,255,.08);
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .option-letter {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.07);
+            color: #aebbd0;
+
+            font-weight: 800;
+
+            transition: .25s ease;
+        }
+
+        .option label:hover {
+            transform: translateX(5px);
+            color: white;
+
+            background: rgba(99,102,241,.10);
+            border-color: rgba(129,140,248,.3);
+        }
+
+        .option input:checked + label {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,58,237,.24),
+                    rgba(37,99,235,.18)
+                );
+
+            border-color: rgba(129,140,248,.65);
+
+            box-shadow:
+                0 8px 25px rgba(79,70,229,.15),
+                inset 0 1px 1px rgba(255,255,255,.06);
+        }
+
+        .option input:checked + label .option-letter {
+            background: linear-gradient(
+                135deg,
+                #7c3aed,
+                #2563eb
+            );
+
+            color: white;
+
+            box-shadow: 0 5px 15px rgba(79,70,229,.3);
+        }
+
+        /* =========================
+           SUBMIT SECTION
+        ========================== */
+
+        .submit-card {
+            margin-top: 24px;
+            padding: 30px;
+
+            text-align: center;
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,58,237,.14),
+                    rgba(6,182,212,.08)
+                ),
+                rgba(15,23,42,.75);
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.25);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .submit-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .submit-card h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .submit-card p {
+            color: #8f9db2;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .submit-btn {
+            border: none;
+            outline: none;
+
+            padding: 15px 32px;
+
+            border-radius: 15px;
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 12px 30px rgba(79,70,229,.35),
+                inset 0 1px 1px rgba(255,255,255,.25);
+
+            transition: .25s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+
+            box-shadow:
+                0 18px 40px rgba(79,70,229,.45),
+                inset 0 1px 1px rgba(255,255,255,.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0) scale(.98);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-top: 18px;
+
+            color: #9aa9bd;
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: .2s ease;
+        }
+
+        .back-btn:hover {
+            color: white;
+            transform: translateX(-4px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            text-align: center;
+            padding: 30px 20px 45px;
+
+            color: #66758b;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: #a5b4fc;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 2px;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .quiz-hero {
+                padding: 28px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                min-height: 70px;
+                padding: 14px 5%;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+                padding: 6px 7px;
+            }
+
+            .quiz-top {
+                align-items: flex-start;
+            }
+
+            .quiz-icon {
+                width: 58px;
+                height: 58px;
+                font-size: 28px;
+            }
+
+            .quiz-hero h1 {
+                font-size: 29px;
+            }
+
+            .quiz-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .question-card {
+                padding: 22px;
+            }
+
+            .question-card h2 {
+                font-size: 17px;
+            }
+
+            .option label {
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .brand span {
+                display: none;
+            }
+
+            .navbar {
+                align-items: center;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .quiz-hero {
+                padding: 22px;
+                border-radius: 23px;
+            }
+
+            .quiz-top {
+                gap: 12px;
+            }
+
+            .quiz-icon {
+                width: 52px;
+                height: 52px;
+                border-radius: 16px;
+            }
+
+            .quiz-label {
+                font-size: 10px;
+            }
+
+            .quiz-description {
+                font-size: 13px;
+            }
+
+            .submit-card {
+                padding: 23px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('homepage') }}" class="brand">
+            <div class="brand-icon">🎓</div>
+            <span>EduCareNix</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('homepage') }}">🏠 Home</a>
+
+            <a href="{{ url_for('dashboard') }}">📊 Dashboard</a>
+
+            <a href="{{ url_for('courses') }}">📚 Courses</a>
+
+            <a href="{{ url_for('progress') }}">📈 Progress</a>
+
+            <a href="{{ url_for('profile') }}">👤 Profile</a>
+
+            <a href="{{ url_for('badges') }}">🏆 Badges</a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <!-- QUIZ HERO -->
+
+        <section class="quiz-hero">
+
+            <div class="hero-content">
+
+                <div class="quiz-top">
+
+                    <div class="quiz-icon">
+                        🧠
+                    </div>
+
+                    <div>
+                        <div class="quiz-label">
+                            EDUCARENIX • SMART ASSESSMENT
+                        </div>
+
+                        <div style="color:#7dd3fc;font-size:12px;font-weight:700;">
+                            📊 KNOWLEDGE CHALLENGE
+                        </div>
+                    </div>
+
+                </div>
+
+                <h1>
+                    {{ quiz['title'] }}
+                </h1>
+
+                <p class="quiz-description">
+                    {{ quiz['description'] }}
+                </p>
+
+                <div class="quiz-stats">
+
+                    <div class="stat">
+                        <div class="stat-icon">📝</div>
+                        <strong>{{ questions|length }}</strong>
+                        <span>Total Questions</span>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-icon">🎯</div>
+                        <strong>10 XP</strong>
+                        <span>Per Correct Answer</span>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-icon">🏆</div>
+                        <strong>80%+</strong>
+                        <span>Quiz Master Target</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <section class="progress-section">
+
+            <div class="progress-info">
+
+                <span>
+                    Quiz Progress
+                </span>
+
+                <strong id="progressText">
+                    0 / {{ questions|length }}
+                </strong>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZ FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('submit_quiz', quiz_id=quiz['id']) }}"
+            id="quizForm"
+        >
+
+            {% for question in questions %}
+
+            <section class="question-card">
+
+                <div class="question-number">
+                    {{ loop.index }}
+                </div>
+
+                <h2>
+                    {{ question['question'] }}
+                </h2>
+
+                <div class="options">
+
+                    <!-- OPTION A -->
+
+                    <div class="option">
+
+                        <input
+                            type="radio"
+                            id="q{{ question['id'] }}_A"
+                            name="question_{{ question['id'] }}"
+                            value="A"
+                        >
+
+                        <label for="q{{ question['id'] }}_A">
+
+                            <span class="option-letter">
+                                A
+                            </span>
+
+                            <span>
+                                {{ question['option_a'] }}
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- OPTION B -->
+
+                    <div class="option">
+
+                        <input
+                            type="radio"
+                            id="q{{ question['id'] }}_B"
+                            name="question_{{ question['id'] }}"
+                            value="B"
+                        >
+
+                        <label for="q{{ question['id'] }}_B">
+
+                            <span class="option-letter">
+                                B
+                            </span>
+
+                            <span>
+                                {{ question['option_b'] }}
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- OPTION C -->
+
+                    <div class="option">
+
+                        <input
+                            type="radio"
+                            id="q{{ question['id'] }}_C"
+                            name="question_{{ question['id'] }}"
+                            value="C"
+                        >
+
+                        <label for="q{{ question['id'] }}_C">
+
+                            <span class="option-letter">
+                                C
+                            </span>
+
+                            <span>
+                                {{ question['option_c'] }}
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- OPTION D -->
+
+                    <div class="option">
+
+                        <input
+                            type="radio"
+                            id="q{{ question['id'] }}_D"
+                            name="question_{{ question['id'] }}"
+                            value="D"
+                        >
+
+                        <label for="q{{ question['id'] }}_D">
+
+                            <span class="option-letter">
+                                D
+                            </span>
+
+                            <span>
+                                {{ question['option_d'] }}
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            {% endfor %}
+
+
+            <!-- SUBMIT -->
+
+            <section class="submit-card">
+
+                <div class="submit-icon">
+                    🚀
+                </div>
+
+                <h2>
+                    Ready to Submit?
+                </h2>
+
+                <p>
+                    Review your answers carefully before submitting.
+                    Your score and XP will be calculated automatically.
+                </p>
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    ✓ Submit Quiz
+                    →
+                </button>
+
+                <br>
+
+                <a
+                    href="{{ url_for('quizzes') }}"
+                    class="back-btn"
+                >
+                    ← Back to Quiz Center
+                </a>
+
+            </section>
+
+        </form>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        © 2026 <strong>EduCareNix</strong> • Learn. Practice. Achieve.
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const totalQuestions = {{ questions|length }};
+
+        const progressFill =
+            document.getElementById("progressFill");
+
+        const progressText =
+            document.getElementById("progressText");
+
+        const radioButtons =
+            document.querySelectorAll(
+                'input[type="radio"]'
+            );
+
+
+        function updateProgress() {
+
+            const questionIds = new Set();
+
+            radioButtons.forEach(function(radio) {
+
+                if (radio.checked) {
+
+                    questionIds.add(
+                        radio.name
+                    );
+
+                }
+
+            });
+
+            const answered =
+                questionIds.size;
+
+            const percentage =
+                totalQuestions > 0
+                    ? (answered / totalQuestions) * 100
+                    : 0;
+
+            progressFill.style.width =
+                percentage + "%";
+
+            progressText.textContent =
+                answered + " / " + totalQuestions;
+
+        }
+
+
+        radioButtons.forEach(function(radio) {
+
+            radio.addEventListener(
+                "change",
+                updateProgress
+            );
+
+        });
+
+
+        document
+            .getElementById("quizForm")
+            .addEventListener("submit", function(event) {
+
+                const answered =
+                    new Set(
+                        [...radioButtons]
+                            .filter(r => r.checked)
+                            .map(r => r.name)
+                    ).size;
+
+
+                if (answered < totalQuestions) {
+
+                    const remaining =
+                        totalQuestions - answered;
+
+                    const message =
+                        remaining === 1
+                            ? "You have 1 unanswered question. Do you want to submit anyway?"
+                            : "You have " +
+                              remaining +
+                              " unanswered questions. Do you want to submit anyway?";
+
+                    const confirmSubmit =
+                        confirm(message);
+
+                    if (!confirmSubmit) {
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

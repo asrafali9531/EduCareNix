@@ -1,0 +1,2154 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate | EduCareNix</title>
+
+    <!-- QR CODE LIBRARY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 35px;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(30, 64, 175, 0.30),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(180, 83, 9, 0.22),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #0f172a,
+                    #172554
+                );
+        }
+
+
+        /* =====================================================
+           CERTIFICATE
+        ===================================================== */
+
+        .certificate {
+
+            width: 1180px;
+            max-width: 100%;
+
+            min-height: 760px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fffefa 0%,
+                    #ffffff 45%,
+                    #f8fafc 100%
+                );
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 45px 120px
+                rgba(0, 0, 0, 0.55);
+
+            padding: 58px 75px;
+        }
+
+
+        /* =====================================================
+           PREMIUM BORDER
+        ===================================================== */
+
+        .certificate::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 17px;
+
+            border:
+                3px solid #b8942e;
+
+            border-radius: 16px;
+
+            pointer-events: none;
+
+            z-index: 5;
+        }
+
+
+        .certificate::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 28px;
+
+            border:
+                1px solid #e7d49a;
+
+            border-radius: 10px;
+
+            pointer-events: none;
+
+            z-index: 5;
+        }
+
+
+        /* =====================================================
+           PREMIUM CORNERS
+        ===================================================== */
+
+        .corner {
+
+            position: absolute;
+
+            width: 95px;
+            height: 95px;
+
+            z-index: 8;
+
+            pointer-events: none;
+        }
+
+
+        .corner::before,
+        .corner::after {
+
+            content: "";
+
+            position: absolute;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #9b771d,
+                    #d6b85b
+                );
+        }
+
+
+        .corner::before {
+
+            width: 3px;
+            height: 58px;
+        }
+
+
+        .corner::after {
+
+            width: 58px;
+            height: 3px;
+        }
+
+
+        .corner-tl {
+            top: 30px;
+            left: 30px;
+        }
+
+
+        .corner-tr {
+
+            top: 30px;
+            right: 30px;
+
+            transform: rotate(90deg);
+        }
+
+
+        .corner-bl {
+
+            bottom: 30px;
+            left: 30px;
+
+            transform: rotate(-90deg);
+        }
+
+
+        .corner-br {
+
+            bottom: 30px;
+            right: 30px;
+
+            transform: rotate(180deg);
+        }
+
+
+        /* =====================================================
+           DECORATIVE ORBS
+        ===================================================== */
+
+        .orb {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: 1;
+
+            filter: blur(1px);
+        }
+
+
+        .orb-one {
+
+            width: 350px;
+            height: 350px;
+
+            top: -220px;
+            right: -130px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(30,64,175,0.13),
+                    rgba(30,64,175,0.01)
+                );
+        }
+
+
+        .orb-two {
+
+            width: 300px;
+            height: 300px;
+
+            bottom: -200px;
+            left: -140px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(184,148,46,0.15),
+                    rgba(184,148,46,0.01)
+                );
+        }
+
+
+        /* =====================================================
+           WATERMARK
+        ===================================================== */
+
+        .watermark {
+
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(-17deg);
+
+            font-size: 145px;
+
+            font-weight: 900;
+
+            letter-spacing: 10px;
+
+            color: #1e3a8a;
+
+            opacity: 0.025;
+
+            white-space: nowrap;
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            position: relative;
+
+            z-index: 20;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand-area {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        /* =====================================================
+           EDUCARE NIX REAL LOGO
+        ===================================================== */
+
+        .logo {
+
+            width: 62px;
+            height: 62px;
+
+            display: block;
+
+            object-fit: contain;
+
+            object-position: center;
+
+            border-radius: 17px;
+
+            background: rgba(255,255,255,0.92);
+
+            padding: 4px;
+
+            margin-bottom: 10px;
+
+            border:
+                2px solid
+                rgba(255,255,255,0.9);
+
+            box-shadow:
+                0 12px 30px
+                rgba(30,64,175,0.22);
+
+            flex-shrink: 0;
+        }
+
+
+        .brand {
+
+            font-size: 35px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            color: #172554;
+        }
+
+
+        .brand span {
+            color: #b8942e;
+        }
+
+
+        .tagline {
+
+            margin-top: 5px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 13px;
+
+            margin: 17px auto 0;
+
+            width: 350px;
+        }
+
+
+        .divider-line {
+
+            height: 1px;
+
+            flex: 1;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #b8942e
+                );
+        }
+
+
+        .divider-line.right {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #b8942e,
+                    transparent
+                );
+        }
+
+
+        .diamond {
+
+            width: 8px;
+            height: 8px;
+
+            background: #b8942e;
+
+            transform: rotate(45deg);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(184,148,46,0.08);
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .title-area {
+
+            margin-top: 20px;
+        }
+
+
+        .title-small {
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            color: #64748b;
+
+            margin-bottom: 7px;
+        }
+
+
+        .title {
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 50px;
+
+            line-height: 1.08;
+
+            letter-spacing: 2px;
+
+            color: #0f172a;
+
+            font-weight: 700;
+        }
+
+
+        .title-description {
+
+            margin-top: 9px;
+
+            font-size: 14px;
+
+            color: #64748b;
+
+            letter-spacing: 0.3px;
+        }
+
+
+        /* =====================================================
+           PRESENTED TO
+        ===================================================== */
+
+        .presented {
+
+            margin-top: 21px;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 3px;
+
+            font-weight: 800;
+
+            color: #94a3b8;
+        }
+
+
+        /* =====================================================
+           STUDENT NAME
+        ===================================================== */
+
+        .student-name {
+
+            display: inline-block;
+
+            margin-top: 5px;
+
+            padding:
+                0 45px 8px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 43px;
+
+            font-weight: 700;
+
+            color: #0f172a;
+
+            border-bottom:
+                2px solid #b8942e;
+
+            min-width: 450px;
+
+            text-shadow:
+                0 1px 0 rgba(255,255,255,0.8);
+        }
+
+
+        /* =====================================================
+           COURSE
+        ===================================================== */
+
+        .course-intro {
+
+            margin-top: 17px;
+
+            font-size: 13px;
+
+            color: #64748b;
+        }
+
+
+        .course-name {
+
+            display: inline-block;
+
+            margin-top: 5px;
+
+            padding:
+                6px 24px;
+
+            font-size: 25px;
+
+            font-weight: 850;
+
+            color: #1e3a8a;
+
+            letter-spacing: 0.4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(30,64,175,0.05),
+                    rgba(184,148,46,0.08),
+                    rgba(30,64,175,0.05)
+                );
+
+            border-radius: 8px;
+        }
+
+
+        /* =====================================================
+           COMPLETION BADGE
+        ===================================================== */
+
+        .completed {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 11px;
+
+            padding:
+                8px 20px;
+
+            border-radius: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc,
+                    #fefce8
+                );
+
+            border:
+                1px solid #e7d49a;
+
+            color: #735b13;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.4px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(184,148,46,0.10);
+        }
+
+
+        .check {
+
+            width: 18px;
+            height: 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #15803d,
+                    #16a34a
+                );
+
+            font-size: 10px;
+
+            box-shadow:
+                0 2px 5px
+                rgba(22,163,74,0.25);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            margin-top: 22px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                130px
+                1fr;
+
+            align-items: end;
+
+            gap: 35px;
+
+            padding:
+                0 55px;
+        }
+
+
+        .footer-box {
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           SIGNATURE
+        ===================================================== */
+
+        .signature-image-box {
+
+            height: 50px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: center;
+
+            margin-bottom: 2px;
+        }
+
+
+        .signature-image {
+
+            width: 165px;
+
+            max-width: 100%;
+
+            height: 47px;
+
+            object-fit: contain;
+
+            object-position: center;
+
+            display: block;
+        }
+
+
+        .signature-line {
+
+            width: 205px;
+
+            max-width: 100%;
+
+            margin: auto;
+
+            border-top:
+                1.5px solid #334155;
+
+            padding-top: 5px;
+        }
+
+
+        .signature-name {
+
+            font-size: 12px;
+
+            font-weight: 850;
+
+            color: #1e293b;
+        }
+
+
+        .signature-label {
+
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            color: #64748b;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =====================================================
+           PREMIUM SEAL
+        ===================================================== */
+
+        .seal {
+
+            width: 92px;
+            height: 92px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff5bd,
+                    #c8a33a,
+                    #f1d56e,
+                    #b8942e
+                );
+
+            box-shadow:
+                0 9px 25px
+                rgba(160,120,20,0.25);
+
+            border:
+                1px solid #a78322;
+        }
+
+
+        .seal::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 6px;
+
+            border:
+                2px dashed
+                rgba(255,255,255,0.9);
+
+            border-radius: 50%;
+        }
+
+
+        .seal-inner {
+
+            width: 67px;
+            height: 67px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #ffffff,
+                    #fffdf1
+                );
+
+            color: #806515;
+
+            font-weight: 900;
+
+            font-size: 8px;
+
+            text-align: center;
+
+            letter-spacing: 0.8px;
+
+            box-shadow:
+                inset 0 0 0 1px
+                rgba(184,148,46,0.2);
+        }
+
+
+        .seal-star {
+
+            font-size: 21px;
+
+            line-height: 21px;
+
+            color: #b8942e;
+        }
+
+
+        /* =====================================================
+           DATE
+        ===================================================== */
+
+        .date-value {
+
+            font-size: 11px;
+
+            font-weight: 850;
+
+            color: #1e293b;
+
+            white-space: nowrap;
+        }
+
+
+        .date-label {
+
+            margin-top: 3px;
+
+            font-size: 9px;
+
+            color: #64748b;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =====================================================
+           CERTIFICATE ID
+        ===================================================== */
+
+        .certificate-id {
+
+            margin-top: 13px;
+
+            font-size: 9px;
+
+            color: #94a3b8;
+
+            letter-spacing: 1.3px;
+        }
+
+
+        .certificate-id strong {
+
+            color: #475569;
+        }
+
+
+        /* =====================================================
+           QR VERIFICATION
+        ===================================================== */
+
+        .qr-section {
+
+            position: absolute;
+
+            right: 43px;
+
+            bottom: 67px;
+
+            width: 108px;
+
+            padding: 8px;
+
+            background:
+                rgba(255,255,255,0.98);
+
+            border:
+                1px solid #d9dee7;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            z-index: 50;
+
+            box-shadow:
+                0 8px 25px
+                rgba(15,23,42,0.12);
+        }
+
+
+        .qr-title {
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            color: #1e3a8a;
+
+            margin-bottom: 5px;
+        }
+
+
+        #certificateQR {
+
+            width: 82px;
+
+            height: 82px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        #certificateQR img,
+        #certificateQR canvas {
+
+            width: 82px !important;
+
+            height: 82px !important;
+
+            display: block;
+
+            margin: auto;
+        }
+
+
+        .qr-label {
+
+            margin-top: 5px;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            letter-spacing: 0.7px;
+
+            color: #334155;
+
+            text-transform: uppercase;
+        }
+
+
+        .qr-small {
+
+            margin-top: 2px;
+
+            font-size: 6px;
+
+            color: #64748b;
+
+            line-height: 1.2;
+        }
+
+
+        /* =====================================================
+           PRINT BUTTON
+        ===================================================== */
+
+        .actions {
+
+            position: fixed;
+
+            bottom: 25px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            z-index: 100;
+        }
+
+
+        .btn {
+
+            border: none;
+
+            padding:
+                14px 27px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #1d4ed8
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(30,64,175,0.38);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 17px 35px
+                rgba(30,64,175,0.45);
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .certificate {
+
+                padding:
+                    45px 25px;
+
+                min-height: auto;
+            }
+
+            .logo {
+
+                width: 55px;
+
+                height: 55px;
+
+                padding: 4px;
+
+                border-radius: 14px;
+
+                margin-bottom: 8px;
+            }
+
+            .brand {
+                font-size: 28px;
+            }
+
+            .tagline {
+
+                font-size: 8px;
+
+                letter-spacing: 2px;
+            }
+
+            .title {
+
+                font-size: 34px;
+            }
+
+            .student-name {
+
+                font-size: 31px;
+
+                min-width: auto;
+
+                padding:
+                    0 12px 7px;
+            }
+
+            .course-name {
+
+                font-size: 21px;
+            }
+
+            .footer {
+
+                grid-template-columns: 1fr;
+
+                gap: 25px;
+
+                padding: 0;
+            }
+
+            .seal {
+                order: -1;
+            }
+
+            .qr-section {
+
+                position: relative;
+
+                right: auto;
+
+                bottom: auto;
+
+                margin: 25px auto 0;
+            }
+
+            .certificate-id {
+
+                margin-bottom: 25px;
+            }
+        }
+
+
+        /* =====================================================
+           PRINT - A4 LANDSCAPE
+        ===================================================== */
+
+        @media print {
+
+            @page {
+
+                size: A4 landscape;
+
+                margin: 0;
+            }
+
+
+            html,
+            body {
+
+                width: 297mm;
+
+                height: 210mm;
+
+                min-height: 210mm;
+
+                margin: 0;
+
+                padding: 0;
+
+                background:
+                    #ffffff !important;
+
+                overflow: hidden !important;
+            }
+
+
+            body {
+
+                display: block;
+
+                width: 297mm;
+
+                height: 210mm;
+            }
+
+
+            /* HIDE CHATBOT / BUTTON */
+
+            #educarenix-global-ai-button,
+            #educarenix-global-ai-style,
+            .actions {
+
+                display: none !important;
+
+                visibility: hidden !important;
+            }
+
+
+            /* CERTIFICATE */
+
+            .certificate {
+
+                width: 297mm;
+
+                height: 210mm;
+
+                min-height: 210mm;
+
+                max-width: none;
+
+                margin: 0;
+
+                padding:
+                    14mm 23mm;
+
+                border-radius: 0;
+
+                box-shadow: none;
+
+                overflow: hidden;
+
+                page-break-before: avoid;
+
+                page-break-after: avoid;
+
+                page-break-inside: avoid;
+
+                break-before: avoid;
+
+                break-after: avoid;
+
+                break-inside: avoid;
+
+                -webkit-print-color-adjust: exact;
+
+                print-color-adjust: exact;
+            }
+
+
+            /* BORDERS */
+
+            .certificate::before {
+
+                inset: 7mm;
+
+                border:
+                    2px solid #b8942e;
+
+                border-radius: 4mm;
+            }
+
+
+            .certificate::after {
+
+                inset: 12mm;
+
+                border:
+                    1px solid #e7d49a;
+
+                border-radius: 3mm;
+            }
+
+
+            /* CORNERS */
+
+            .corner {
+
+                width: 60px;
+
+                height: 60px;
+            }
+
+
+            .corner-tl {
+
+                top: 14mm;
+                left: 14mm;
+            }
+
+
+            .corner-tr {
+
+                top: 14mm;
+                right: 14mm;
+            }
+
+
+            .corner-bl {
+
+                bottom: 14mm;
+                left: 14mm;
+            }
+
+
+            .corner-br {
+
+                bottom: 14mm;
+                right: 14mm;
+            }
+
+
+            .corner::before {
+
+                width: 2px;
+
+                height: 40px;
+            }
+
+
+            .corner::after {
+
+                width: 40px;
+
+                height: 2px;
+            }
+
+
+            /* BRAND + REAL LOGO */
+
+            .logo {
+
+                width: 42px;
+
+                height: 42px;
+
+                padding: 3px;
+
+                border-radius: 9px;
+
+                margin-bottom: 3px;
+
+                object-fit: contain;
+
+                box-shadow:
+                    0 4px 10px
+                    rgba(30,64,175,0.15);
+            }
+
+
+            .brand {
+
+                font-size: 25px;
+
+                letter-spacing: 1.2px;
+            }
+
+
+            .tagline {
+
+                margin-top: 1px;
+
+                font-size: 6px;
+
+                letter-spacing: 2px;
+            }
+
+
+            /* DIVIDER */
+
+            .divider {
+
+                width: 235px;
+
+                margin-top: 5px;
+
+                gap: 7px;
+            }
+
+
+            .diamond {
+
+                width: 5px;
+
+                height: 5px;
+            }
+
+
+            /* TITLE */
+
+            .title-area {
+
+                margin-top: 7px;
+            }
+
+
+            .title-small {
+
+                font-size: 7px;
+
+                letter-spacing: 2.7px;
+
+                margin-bottom: 2px;
+            }
+
+
+            .title {
+
+                font-size: 32px;
+
+                letter-spacing: 1px;
+            }
+
+
+            .title-description {
+
+                margin-top: 3px;
+
+                font-size: 8px;
+            }
+
+
+            /* STUDENT */
+
+            .presented {
+
+                margin-top: 8px;
+
+                font-size: 7px;
+
+                letter-spacing: 1.5px;
+            }
+
+
+            .student-name {
+
+                margin-top: 3px;
+
+                padding:
+                    0 20px 3px;
+
+                font-size: 28px;
+
+                min-width: 325px;
+            }
+
+
+            /* COURSE */
+
+            .course-intro {
+
+                margin-top: 5px;
+
+                font-size: 8px;
+            }
+
+
+            .course-name {
+
+                margin-top: 2px;
+
+                padding:
+                    4px 17px;
+
+                font-size: 17px;
+            }
+
+
+            /* COMPLETED */
+
+            .completed {
+
+                margin-top: 4px;
+
+                padding:
+                    4px 12px;
+
+                gap: 4px;
+
+                font-size: 7px;
+            }
+
+
+            .check {
+
+                width: 12px;
+
+                height: 12px;
+
+                font-size: 7px;
+            }
+
+
+            /* FOOTER */
+
+            .footer {
+
+                margin-top: 7px;
+
+                grid-template-columns:
+                    1fr
+                    90px
+                    1fr;
+
+                gap: 12px;
+
+                padding:
+                    0 20px;
+
+                align-items: end;
+            }
+
+
+            /* SIGNATURE */
+
+            .signature-image-box {
+
+                height: 28px;
+
+                margin-bottom: 1px;
+            }
+
+
+            .signature-image {
+
+                width: 110px;
+
+                height: 27px;
+            }
+
+
+            .signature-line {
+
+                width: 140px;
+
+                padding-top: 2px;
+            }
+
+
+            .signature-name {
+
+                font-size: 8px;
+            }
+
+
+            .signature-label {
+
+                margin-top: 1px;
+
+                font-size: 6px;
+
+                letter-spacing: .4px;
+            }
+
+
+            /* SEAL */
+
+            .seal {
+
+                width: 59px;
+
+                height: 59px;
+            }
+
+
+            .seal::before {
+
+                inset: 4px;
+
+                border-width: 1px;
+            }
+
+
+            .seal-inner {
+
+                width: 43px;
+
+                height: 43px;
+
+                font-size: 5px;
+
+                letter-spacing: .3px;
+            }
+
+
+            .seal-star {
+
+                font-size: 12px;
+
+                line-height: 13px;
+            }
+
+
+            /* DATE */
+
+            .date-value {
+
+                font-size: 7px;
+            }
+
+
+            .date-label {
+
+                margin-top: 1px;
+
+                font-size: 6px;
+
+                letter-spacing: .4px;
+            }
+
+
+            /* CERTIFICATE ID */
+
+            .certificate-id {
+
+                margin-top: 3px;
+
+                font-size: 5.5px;
+
+                letter-spacing: .6px;
+            }
+
+
+            /* QR */
+
+            .qr-section {
+
+                position: absolute !important;
+
+                right: 15mm !important;
+
+                bottom: 25mm !important;
+
+                width: 28mm !important;
+
+                padding: 1.5mm !important;
+
+                margin: 0 !important;
+
+                background:
+                    #ffffff !important;
+
+                border:
+                    0.3mm solid #d1d5db !important;
+
+                border-radius:
+                    1.5mm !important;
+
+                box-shadow: none !important;
+
+                z-index: 100 !important;
+
+                display: block !important;
+
+                visibility: visible !important;
+            }
+
+
+            .qr-title {
+
+                font-size: 4px;
+
+                margin-bottom: 1mm;
+
+                letter-spacing: .5px;
+            }
+
+
+            #certificateQR {
+
+                width: 21mm !important;
+
+                height: 21mm !important;
+
+                margin: auto !important;
+
+                display: flex !important;
+
+                align-items: center !important;
+
+                justify-content: center !important;
+            }
+
+
+            #certificateQR img,
+            #certificateQR canvas {
+
+                width: 21mm !important;
+
+                height: 21mm !important;
+
+                display: block !important;
+
+                margin: auto !important;
+            }
+
+
+            .qr-label {
+
+                margin-top: .7mm;
+
+                font-size: 4px;
+
+                line-height: 1.1;
+
+                letter-spacing: .3px;
+            }
+
+
+            .qr-small {
+
+                margin-top: .2mm;
+
+                font-size: 3px;
+
+                line-height: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         CERTIFICATE
+    ===================================================== -->
+
+    <div class="certificate">
+
+        <!-- CORNERS -->
+
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+
+        <!-- ORBS -->
+
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+
+
+        <!-- WATERMARK -->
+
+        <div class="watermark">
+            EDUCARENIX
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="content">
+
+
+            <!-- =================================================
+                 BRAND
+            ================================================== -->
+
+            <div class="brand-area">
+
+                <!-- REAL EDUCARE NIX LOGO -->
+
+                <img
+                    src="{{ url_for('static', filename='logo.png') }}"
+                    alt="EduCareNix Logo"
+                    class="logo"
+                >
+
+                <div class="brand">
+                    EduCare<span>Nix</span>
+                </div>
+
+                <div class="tagline">
+                    Smart Learning & Skill Platform
+                </div>
+
+            </div>
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <div class="divider-line"></div>
+
+                <div class="diamond"></div>
+
+                <div class="divider-line right"></div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TITLE
+            ================================================== -->
+
+            <div class="title-area">
+
+                <div class="title-small">
+                    Official Achievement
+                </div>
+
+                <div class="title">
+                    Certificate of Completion
+                </div>
+
+                <div class="title-description">
+                    This certificate is proudly presented in recognition of successful course completion.
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 STUDENT
+            ================================================== -->
+
+            <div class="presented">
+                This Certificate Is Proudly Presented To
+            </div>
+
+
+            <div class="student-name">
+                {{ certificate["student_name"] }}
+            </div>
+
+
+            <!-- =================================================
+                 COURSE
+            ================================================== -->
+
+            <div class="course-intro">
+                for successfully completing the course
+            </div>
+
+
+            <div class="course-name">
+                {{ certificate["course_name"] }}
+            </div>
+
+
+            <!-- =================================================
+                 COMPLETION
+            ================================================== -->
+
+            <div class="completed">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                SUCCESSFULLY COMPLETED
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <div class="footer">
+
+
+                <!-- SIGNATURE -->
+
+                <div class="footer-box">
+
+                    <div class="signature-image-box">
+
+                        <img
+                            src="{{ url_for('static', filename='signature.png') }}"
+                            alt="Md Asraf Ali Signature"
+                            class="signature-image">
+
+                    </div>
+
+
+                    <div class="signature-line">
+
+                        <div class="signature-name">
+                            Md Asraf Ali
+                        </div>
+
+                    </div>
+
+
+                    <div class="signature-label">
+                        Authorized Signature
+                    </div>
+
+                </div>
+
+
+                <!-- SEAL -->
+
+                <div class="seal">
+
+                    <div class="seal-inner">
+
+                        <div class="seal-star">
+                            ★
+                        </div>
+
+                        VERIFIED
+                        <br>
+                        EDUCARE NIX
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="footer-box">
+
+                    <div class="signature-line">
+
+                        <div class="date-value">
+                            {{ certificate["issued_at"] }}
+                        </div>
+
+                    </div>
+
+                    <div class="date-label">
+                        Completion Date
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CERTIFICATE ID
+            ================================================== -->
+
+            <div class="certificate-id">
+
+                CERTIFICATE ID:
+
+                <strong>
+                    {{ certificate["certificate_id"] }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             QR VERIFICATION
+        ===================================================== -->
+
+        <div
+            class="qr-section"
+            id="educarenix-certificate-qr">
+
+            <div class="qr-title">
+                SECURE VERIFICATION
+            </div>
+
+            <div id="certificateQR"></div>
+
+            <div class="qr-label">
+                SCAN TO VERIFY
+            </div>
+
+            <div class="qr-small">
+                EduCareNix Certificate
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PRINT BUTTON
+    ===================================================== -->
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="window.print()">
+
+            🖨️ Print / Save as PDF
+
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         QR GENERATION
+    ===================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const qrContainer =
+                    document.getElementById(
+                        "certificateQR"
+                    );
+
+                if (!qrContainer) {
+                    return;
+                }
+
+
+                const verificationURL =
+                    window.location.href;
+
+
+                if (typeof QRCode === "undefined") {
+
+                    qrContainer.innerHTML =
+                        "<span style='font-size:8px;color:red;'>QR unavailable</span>";
+
+                    return;
+                }
+
+
+                new QRCode(
+                    qrContainer,
+                    {
+                        text: verificationURL,
+
+                        width: 82,
+
+                        height: 82,
+
+                        colorDark: "#111827",
+
+                        colorLight: "#ffffff",
+
+                        correctLevel:
+                            QRCode.CorrectLevel.H
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           PRINT CONTROL
+        ===================================================== */
+
+        window.addEventListener(
+            "beforeprint",
+            function () {
+
+                const chatbot =
+                    document.getElementById(
+                        "educarenix-global-ai-button"
+                    );
+
+                if (chatbot) {
+
+                    chatbot.style.display =
+                        "none";
+                }
+
+            }
+        );
+
+
+        window.addEventListener(
+            "afterprint",
+            function () {
+
+                const chatbot =
+                    document.getElementById(
+                        "educarenix-global-ai-button"
+                    );
+
+                if (chatbot) {
+
+                    chatbot.style.display =
+                        "flex";
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+```

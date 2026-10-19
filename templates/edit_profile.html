@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile | EduCareNix</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37,99,235,.30),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(124,58,237,.25),
+                    transparent 35%
+                ),
+                #020617;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px 15px;
+
+            overflow-x: hidden;
+        }
+
+        .background-orb {
+
+            position: fixed;
+
+            width: 260px;
+
+            height: 260px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: .25;
+
+            pointer-events: none;
+        }
+
+        .orb-one {
+
+            background: #2563eb;
+
+            top: -100px;
+
+            left: -100px;
+        }
+
+        .orb-two {
+
+            background: #7c3aed;
+
+            right: -100px;
+
+            bottom: -100px;
+        }
+
+        .container {
+
+            width: 100%;
+
+            max-width: 620px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .card {
+
+            padding: 38px;
+
+            border-radius: 28px;
+
+            background:
+                rgba(15,23,42,.78);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            backdrop-filter: blur(22px);
+
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.45);
+
+            animation:
+                cardEnter .6s ease;
+        }
+
+        @keyframes cardEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.97);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 28px;
+        }
+
+        .logo {
+
+            width: 64px;
+
+            height: 64px;
+
+            object-fit: contain;
+
+            border-radius: 18px;
+
+            margin-bottom: 12px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(37,99,235,.35);
+        }
+
+        .brand h1 {
+
+            font-size: 25px;
+
+            margin-bottom: 6px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+        .input-box {
+
+            width: 100%;
+
+            padding: 15px 16px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            outline: none;
+
+            background:
+                rgba(2,6,23,.65);
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            transition: .25s ease;
+        }
+
+        .input-box:focus {
+
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(96,165,250,.10);
+
+            transform:
+                translateY(-1px);
+        }
+
+        .input-box::placeholder {
+
+            color: #64748b;
+        }
+
+        .error {
+
+            margin-bottom: 20px;
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(239,68,68,.12);
+
+            border:
+                1px solid
+                rgba(239,68,68,.35);
+
+            color: #fca5a5;
+
+            font-size: 14px;
+        }
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .btn {
+
+            flex: 1;
+
+            border: none;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            padding: 14px 18px;
+
+            border-radius: 14px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .btn-primary {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(37,99,235,.25);
+        }
+
+        .btn-primary:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(124,58,237,.35);
+        }
+
+        .btn-secondary {
+
+            color: #cbd5e1;
+
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+        }
+
+        .btn-secondary:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                rgba(255,255,255,.10);
+        }
+
+        .bottom-link {
+
+            text-align: center;
+
+            margin-top: 22px;
+        }
+
+        .bottom-link a {
+
+            color: #60a5fa;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+        .bottom-link a:hover {
+
+            color: #a78bfa;
+        }
+
+        @media (max-width: 600px) {
+
+            .card {
+
+                padding: 25px 20px;
+
+                border-radius: 22px;
+            }
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+            .btn {
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="background-orb orb-one"></div>
+
+    <div class="background-orb orb-two"></div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="brand">
+
+                <img
+                    src="{{ url_for('static', filename='logo.png') }}"
+                    class="logo"
+                    alt="EduCareNix Logo"
+                >
+
+                <h1>Edit Profile</h1>
+
+                <p>
+                    Update your EduCareNix account information
+                </p>
+
+            </div>
+
+            {% if error %}
+
+                <div class="error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+            <form
+                method="POST"
+                action="{{ url_for('edit_profile') }}"
+            >
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="input-box"
+                        value="{{ user['name'] }}"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="input-box"
+                        value="{{ user['email'] }}"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+                <div class="buttons">
+
+                    <a
+                        href="{{ url_for('profile') }}"
+                        class="btn btn-secondary"
+                    >
+                        ← Back to Profile
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div class="bottom-link">
+
+                <a
+                    href="{{ url_for('change_password') }}"
+                >
+                    🔐 Change Password
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
