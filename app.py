@@ -5017,7 +5017,7 @@ def api_chat():
 
         http_request = urllib.request.Request(
             "https://generativelanguage.googleapis.com/v1beta/"
-            "models/gemini-3.8-flash:generateContent",
+            "models/gemini-3.5-flash-lite:generateContent",
             data=json.dumps(payload ).encode("utf-8"),
             headers={
                 "Content-Type": "application/json",
