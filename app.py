@@ -4960,174 +4960,117 @@ def check_questions_table():
 
 
 # =========================================================
-# REAL AI CHAT API - LOCAL OLLAMA
+# AI CHAT API - GEMINI
 # =========================================================
 
 @app.route("/api/chat", methods=["POST"])
 def api_chat():
 
     if "user_id" not in session:
-
         return jsonify({
             "success": False,
             "error": "Please login first."
         }), 401
 
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return jsonify({
+            "success": False,
+            "error": "AI service is not configured."
+        }), 503
+
     try:
-
-        data = request.get_json(
-            silent=True
-        ) or {}
-
-        user_message = str(
-            data.get(
-                "message",
-                ""
-            )
-        ).strip()
+        data = request.get_json(silent=True) or {}
+        user_message = str(data.get("message", "")).strip()
 
         if not user_message:
-
             return jsonify({
                 "success": False,
                 "error": "Please enter a message."
             }), 400
 
         if len(user_message) > 4000:
-
             return jsonify({
                 "success": False,
-                "error": (
-                    "Message is too long. "
-                    "Please keep it under 4000 characters."
-                )
+                "error": "Message is too long. Please keep it under 4000 characters."
             }), 400
 
         system_prompt = (
             "You are EduCareNix AI, a friendly educational assistant "
-            "for students. Help with Python, C, C++, DSA, Web Development, "
-            "Data Analytics, Artificial Intelligence, mathematics, "
-            "programming and general study topics. "
-            "Explain difficult concepts in simple language. "
-            "When giving code, make it beginner-friendly and explain "
-            "important parts. "
-            "Do not claim to have performed actions that you did not perform. "
-            "Keep answers useful and reasonably concise unless the student "
-            "asks for detail. "
-            "The student may use Bengali, Banglish, Hindi, or English; "
-            "reply in the language that best matches the student's message."
+            "for students. Help with programming, mathematics, and study topics. "
+            "Explain difficult concepts simply and make code beginner-friendly. "
+            "Reply in the language that best matches the student's message."
         )
 
         payload = {
-
-            "model": OLLAMA_MODEL,
-
-            "stream": False,
-
-            "messages": [
-
-                {
-                    "role": "system",
-                    "content": system_prompt
-                },
-
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ],
-
-            "options": {
+            "systemInstruction": {
+                "parts": [{"text": system_prompt}]
+            },
+            "contents": [{
+                "role": "user",
+                "parts": [{"text": user_message}]
+            }],
+            "generationConfig": {
                 "temperature": 0.7
             }
         }
 
-        body = json.dumps(
-            payload
-        ).encode(
-            "utf-8"
-        )
-
         http_request = urllib.request.Request(
-
-            OLLAMA_URL,
-
-            data=body,
-
+            "https://generativelanguage.googleapis.com/v1beta/"
+            "models/gemini-3.8-flash:generateContent",
+            data=json.dumps(payload ).encode("utf-8"),
             headers={
-                "Content-Type":
-                "application/json"
+                "Content-Type": "application/json",
+                "x-goog-api-key": api_key
             },
-
             method="POST"
         )
 
-        with urllib.request.urlopen(
-            http_request,
-            timeout=120
-        ) as http_response:
+        with urllib.request.urlopen(http_request, timeout=60 ) as response:
+            result = json.loads(response.read().decode("utf-8"))
 
-            raw_response = (
-                http_response
-                .read()
-                .decode("utf-8")
-            )
-
-        ai_response = json.loads(
-            raw_response
+        candidates = result.get("candidates", [])
+        parts = (
+            candidates[0].get("content", {}).get("parts", [])
+            if candidates else []
         )
-
-        reply = str(
-            ai_response
-            .get("message", {})
-            .get("content", "")
+        reply = "\n".join(
+            part.get("text", "")
+            for part in parts
+            if isinstance(part, dict)
         ).strip()
 
         if not reply:
-
             return jsonify({
                 "success": False,
-                "error": (
-                    "The local AI returned an empty "
-                    "response. Please try again."
-                )
-            }), 500
+                "error": "AI returned no answer. Please try again."
+            }), 502
 
         return jsonify({
             "success": True,
             "reply": reply
         })
 
-    except urllib.error.URLError as connection_error:
-
-        print(
-            "OLLAMA CONNECTION ERROR:",
-            connection_error
-        )
-
+    except urllib.error.HTTPError as error:
+        print("Gemini API HTTP error:", error.code)
         return jsonify({
             "success": False,
-            "error": (
-                "EduCareNix AI is not connected to Ollama. "
-                "Please make sure Ollama is running and try again."
-            )
+            "error": "AI service could not answer right now. Please try again."
+        }), 502
+
+    except (urllib.error.URLError, TimeoutError) as error:
+        print("Gemini API connection error:", error)
+        return jsonify({
+            "success": False,
+            "error": "Could not connect to the AI service. Please try again."
         }), 503
 
-    except Exception as ai_error:
-
-        print(
-            "OLLAMA AI ERROR:",
-            ai_error
-        )
-
+    except Exception as error:
+        print("Gemini API error:", error)
         return jsonify({
             "success": False,
-            "error": (
-                "The local AI could not answer right now. "
-                "Please try again."
-            )
+            "error": "AI service could not answer right now. Please try again."
         }), 500
-
 
 # =========================================================
 # CHATBOT PAGE
